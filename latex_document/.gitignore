@@ -9,3 +9,5 @@
 !*.tex
 !*.md
 !*.pdf
+
+*eps-converted-to.pdf

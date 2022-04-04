@@ -3,7 +3,7 @@
 \chapter{Literature Review} \label{chap:literature-review}
 \keywords{artificial intelligence, stock market}
 \section{Introduction}
-As the world advances in technology, an increasing number of decisions are dependent on computational models; including financial decisions. This includes, but is not limited to, decisions for money management, risk management, economics, and investing. 
+As the world advances in technology, an increasing number of decisions are dependent on computational models; including financial decisions. This includes, but is not limited to, decisions for money management, risk management, economics, and investing.
 This literature review will discuss: the feasibility of predicting stock market prices; different artificial intelligence research methods used in financial modelling, particular those that relate to investing and stock market indices; and the different input features used in these models.
 
 \section{Feasibility of predicting stock market index prices}
@@ -26,6 +26,86 @@ However, other recent studies have suggested the efficient market hypothesis may
 
 
 \section{Types of artificial intelligence methods used}
+
+\subsection{Description of artificial intelligence methods}
+Various artificial intelligence methods have been utilised in order to predict daily direction as well
+as price of stock markets, the following are described here:
+\begin{itemize}
+    \item Multilayer Perceptrons (MLPs)
+    \item Support Vector Machines (SVMs)
+    \item Long Short Term Memory (LSTM)
+    \item Hybrid approaches
+\end{itemize}
+
+\subsubsection{Multilayer Perceptrons (MLPs)}
+Multilayer Perceptrons (MLPs - \autoref{fig:multilayer-perceptron}) are a class of artificial neural networks. They contain multiple layers
+of perceptrons, including an input layer, one or many hidden layers and an output layer. They are
+feed-forward networks meaning that data is only passed to the next layer and does not move backwards.
+It is an example of a supervised neural network as labelled data is used in training.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.4\columnwidth]{figures/multilayer-perceptron.pdf}
+    \caption[Diagram of a Multilayer Perceptron]{Diagram of a Multilayer Perceptron; adapted from Artificial neural network.svg, Wikimedia, Cburnett}
+    \label{fig:multilayer-perceptron}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Convolutional Neural Networks (CNNs)}
+Convolutional Neural Networks (CNNs - \autoref{fig:convolutional-neural-network}) are a class of artificial neural networks. They contain
+multiple layers; including an input layer, one or many convolutional and pooling layers, and an
+output layer. The convolutional and pooling layers are inspired by biological processes; each
+layer extracts and summarises certain features and convolves the input and passes to the next
+layer. The pooling layers are using to reduce the spatial size of the data by combining outputs
+in order to optimise the network for performance.
+
+They are feed-forward networks meaning that data is only passed to the next layer and does
+not move backwards. It is an example of a supervised neural network as labelled data is used
+in training.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\columnwidth]{figures/convolutional-neural-networks.pdf}
+    \caption[Diagram of a Convolutional Neural Network]{Diagram of a Convolutional Neural Network; \parencite{Maier2019}}
+    \label{fig:convolutional-neural-network}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Support Vector Machines (SVM)}
+Support Vector Machines (SVMs - \autoref{fig:support-vector-machines}) are a class of machine learning models that are used in classification
+of data. In this model, the training data is used in order to identify a decision boundary, known as
+a hyperplane that separates the classifications of data. It is an example of a supervised machine
+learning model as labelled data is used in training.
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.6\columnwidth]{figures/support-vector-machines.pdf}
+    \caption[Diagram of a Support Vector Machine]{Diagram of a Support Vector Machine}
+    \label{fig:support-vector-machines}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Long Short Term Memory (LSTM)}
+Long Short Term Memory (LSTM - \autoref{fig:long-short-term-memory}) is a class of artificial neural networks. They are recurrent
+networks meaning that data is not necessarily fed-forward as they allow for loops within the
+network. LSTMs contain cells with 'gates' that allow them to keep context and control the flow of data,
+as well as make decisions to keep or discard data in order to make predictions. It is an example of a supervised neural network as labelled data is used in training.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/long-short-term-memory.pdf}
+    \caption[Diagram of a LSTM Unit]{Diagram of a Long Short Term Memory Unitadapted from Long Short-Term Memory.svg, Wikimedia, fdeloche}
+    \label{fig:long-short-term-memory}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Hybrid Approaches}
+
+Hybrid approaches can be utilised in order to overcome shortcomings in certain models. A hybrid
+approach can utilise any number of different models; for example a CNN-LSTM hybrid model will use
+CNN and LSTM layers as a CNN may be a good model for classification problems, an LSTM is better
+suited to time series data.
+
+\subsection{Artificial intelligence methods used in previous studies}
 
 Different studies have utilised different artificial intelligence models to predict the price of stock market indices, with varying degrees of accuracy.
 
