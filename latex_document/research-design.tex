@@ -1,35 +1,44 @@
 \chapter{Research Design} \label{chap:research-design}
 \section{Research method}
+The research methodology is one based on the literature review (\autoref{chap:literature-review});
+the research already carried out in other studies
+informed the the decision making process behind the requirements of the supporting artefact. Various artificial
+intelligence models have been analysed and critiqued; as well as the input features used within these models.
+
+These aspects combined are used to inform the variables - such as model used, input features
+(and their time horizons) - to experiment with to better understand which variables are most important
+and have the ability to provide the most accurate results.
+
+
 \section{Research process}
-\subsection{Data collection}
-In order to collect the data for this research project, various sources were utilised.
+\subsection{Comparison of AI models in previous studies}
+\begin{table}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Artificial Intelligence Model & Ease of Implementation & Accuracy of Output \\
+    \hline\hline
+    Multilayer Perceptrons & 5 & 3 \\
+    Convolutional Neural Networks & 3 & 4 \\
+    Support Vector Machines & 4 & 4 \\
+    Hybrid (CNN + LSTM) & 2 & 5 \\
+    \hline
+\end{tabular}
+\end{table}
 
-\subsubsection{Stock Market Index Price and Volume}
-To collect the data for the S\&P 500, Yahoo Finance was utilised. This source allowed
-retrieval of the historical daily price and volume of the SPDR S\&P 500 ETF Trust (\$SPY),
-an Exchange Traded Fund that tracks the S\&P 500. While larger time horizons were permitted,
-only data from 2006-11-01 onwards was downloaded as to align with data available for other
-input features
-
-\subsubsection{Stock Market Volatility}
-To collect the data for the market volatility, Yahoo Finance was utilised. This source allowed
-retrieval of the historical daily price and volume of the CBOE Volatility Index (\^VIX),
-an Exchange Traded Product that tracks the market volatility. While larger time horizons were
-permitted, only data from 2006-11-01 onwards was downloaded as to align with data available for
-other input features
-
-\subsection{M1 Money Supply}
-
-To collect the data for the money supply, FRED (Federal Reserve Economic Data) was utilised. This source allowed
-retrieval of the historical weekly money supply within the USA. While larger time horizons were
-permitted, only data from 2006-11-01 onwards was downloaded as to align with data available for
-other input features
-
-\subsection{Gross Domestic Product (GDP)}
-
-To collect the data for the Gross Domestic Product (GDP), FRED (Federal Reserve Economic Data) was utilised. This source allowed
-retrieval of the historical quartlerly money supply within the USA. While larger time horizons were
-permitted, only data from 2006-11-01 onwards was downloaded as to align with data available for
-other input features
+\subsection{Comparison of input features used in previous studies}
+\begin{table}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Input Feature Set & Accuracy of Output \\
+    \hline\hline
+    Daily Closing Price & 5\\
+    Above + Low Price + High Price + Volume & 3\\
+    Above + Currency Rates + Commodities & 4\\
+    Above + Treasury Rates & 2\\
+    \hline
+\end{tabular}
+\end{table}
 
 \section{Research outcomes}
