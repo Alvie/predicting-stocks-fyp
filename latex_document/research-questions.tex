@@ -1,15 +1,12 @@
 \chapter{Research Questions} \label{chap:research-questions}
 
-How well does the report describe and justify how the research questions were arrived at?
-Does the report describe and explain the important questions (and why they are important)?
-Are the questions appropriate? Has the client (if any) approved them (implicitly or explicitly)?
 
 \section{Predicting a stock market index's direction}
 \textbf{Question} Is it possible to accurately predict a stock market index's (S\&P 500) direction for
 the following day with the CNN-LSTM model?\\
 \textbf{Sub Questions}
 \begin{itemize}
-    \item If so, what is the accuracy of the model? How often is it correct?
+    \item If so, what is the accuracy of the model?
     \item If not, what limitations affected the model to cause it to be inaccurate?
     \item Can the findings of this question be used to prove/disprove the efficient market hypothesis?
 \end{itemize}
@@ -21,7 +18,7 @@ market hypothesis.
 
 \section{Predicting a stock market index's price}
 This question assumes that it is at least somewhat possible to accurately predict the stock market index's
-direction based on literature review and other studies.
+direction based on literature review and other studies.\\
 \textbf{Question} Is it possible to accurately predict a stock market index's (S\&P 500) price for
 the following day with the CNN-LSTM model?\\
 \textbf{Sub Questions}
@@ -29,7 +26,10 @@ the following day with the CNN-LSTM model?\\
     \item If so, what is the accuracy of the model?
     \begin{itemize}
         \item How close is it to the true values?
-        \item Are there any significant outliers, if so what causes them?
+        \item Are there any significant outliers?
+        \begin{itemize}
+            \item If so, what are potential causes?
+        \end{itemize}
     \end{itemize}
     \item If not, what limitations affected the model to cause it to be inaccurate?
 \end{itemize}
@@ -41,7 +41,7 @@ market hypothesis.
 
 \section{History of training data}
 This question assumes that it is at least somewhat possible to accurately predict the stock market index's
-direction/price based on literature review and other studies.
+direction/price based on literature review and other studies.\\
 \textbf{Question} How do different lengths of time as history in the training data affect the model?\\
 \textbf{Sub Questions}
 \begin{itemize}
@@ -56,7 +56,7 @@ at.
 
 \section{Most important input features}
 This question assumes that it is at least somewhat possible to accurately predict the stock market index's
-direction/price based on literature review and other studies.
+direction/price based on literature review and other studies.\\
 \textbf{Question} What are the most important input features that affect the model?\\
 \textbf{Sub Questions}
 \begin{itemize}
