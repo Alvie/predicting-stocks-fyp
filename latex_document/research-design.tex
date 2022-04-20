@@ -12,33 +12,71 @@ and have the ability to provide the most accurate results.
 
 \section{Research process}
 \subsection{Comparison of AI models in previous studies}
-\begin{table}
+From the literature review, various AI models were identified. These include Multilayer Perceptrons (MLPs),
+Convolutional Neural Networks (CNNs), Support Vector Machines (SVMs), Long Short Term Memory (LSTM) and hybrid
+approaches. From this, we can understand which models can have greater accuracy. The review has found a hybrid
+approach has the greatest accuracy. CNNs and SVMs have a similar degree of accuracy and generally outperform MLPs.
+
+\begin{table}[h]
     \centering
-\begin{tabular}{|c|c|c|c|c|}
-    \hline
-    Artificial Intelligence Model & Ease of Implementation & Accuracy of Output \\
-    \hline\hline
-    Multilayer Perceptrons & 5 & 3 \\
-    Convolutional Neural Networks & 3 & 4 \\
-    Support Vector Machines & 4 & 4 \\
-    Hybrid (CNN + LSTM) & 2 & 5 \\
-    \hline
-\end{tabular}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Artificial Intelligence Model & Ease of Implementation & Accuracy of Output \\
+        \hline\hline
+        Multilayer Perceptrons & 5 & 3 \\
+        Convolutional Neural Networks & 3 & 4 \\
+        Support Vector Machines & 3 & 4 \\
+        Hybrid (CNN + LSTM) & 2 & 5 \\
+        \hline
+    \end{tabular}
+    \caption[Table rating different AI models]{Table rating different AI models on a scale of 1 to 5 based on ease of implementation as well as accuracy}
+    \label{tab:research_model_comparison}
 \end{table}
+\FloatBarrier
 
 \subsection{Comparison of input features used in previous studies}
-\begin{table}
-    \centering
-\begin{tabular}{|c|c|c|c|c|}
-    \hline
-    Input Feature Set & Accuracy of Output \\
-    \hline\hline
-    Daily Closing Price & 5\\
-    Above + Low Price + High Price + Volume & 3\\
-    Above + Currency Rates + Commodities & 4\\
-    Above + Treasury Rates & 2\\
-    \hline
-\end{tabular}
-\end{table}
+Currently, based on the studies in the literature review, it is difficult to suggest which input features
+are most important for an accurate output. This is due to the studies using more complex datasets as input
+features generally use a different research model 
+
+This is one of the primary research questions identified, and this project intends to answer this question.
+The previous studies use the following input features; a subset of the features will be used and compared
+within this project. 
+\begin{itemize}
+    \item Daily Closing Price
+    \item Low Price
+    \item High Price
+    \item Volume
+    \item Currency Rates
+    \item Commodities (e.g. Oil)
+    \item Treasury Rates
+    \item Stock indices of other countries
+    \item Individual Stocks
+    \item Certificate of Deposits
+    \item Term spreads
+\end{itemize}
 
 \section{Research outcomes}
+As CNN+LSTM hybrid approaches have already been proven in previous studies to be an accurate research model,
+this model should be used within the artefact of this project. However, the effect of different input
+features on a single research model has not been well identified. This will be a primary area of focus for
+the supporting artefact to look into. Ideally, this will allow the supporting artefact to have greater than
+65\% accuracy in predicting the daily price direction.
+
+\section{Requirements of the supporting artefact}
+\subsection{Functional requirements}
+\subsubsection{Necessary requirements}
+\begin{itemize}
+    \item Predict daily price direction with 65\%+ accuracy
+    \item 
+\end{itemize}
+\subsubsection{Optional requirements}
+\begin{itemize}
+    \item Predict daily price direction with 65\%+ accuracy
+    \item 
+\end{itemize}
+\subsection{Non-functional requirements}
+\begin{itemize}
+    \item Predict daily price direction with 65\%+ accuracy
+    \item 
+\end{itemize}
