@@ -1,1 +1,15 @@
-\chapter{Results} \label{chap:results}
+\chapter{Results and evaluation} \label{chap:results}
+\section{Accuracy of Iteration 1}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/results/iteration1_3lstm64_2dense128_accuracy.pdf}
+    \caption[Figure of accuracies of various layer variables for Iteration 1]{Figure of all accuracies of the combinations of LSTM Layers and Dense Layers, and their training and validation results}
+    \label{fig:model}
+\end{figure}
+
+Training: 60.1%\\
+Validation: 59.9%
+
+After 14 epochs
+\subsection{Limitations of iteration 1}
+Only subset of features, not many sequence lengths tested

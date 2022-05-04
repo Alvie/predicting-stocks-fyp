@@ -160,12 +160,109 @@ sources for used in the data collection process are also present within this lis
 The primary assumptions are surrounding the trading days; whilst this varies per month / year, it is assumed
 that 1 week is equivalent to 5 trading days, 1 month is equivalent to 21 trading days, 1 quarter (3 months)
 is equivalent to 63 trading days, 1 half is equivalent to 126 trading days, and 1 year is equivalent to 252
-trading days.
-\section{Data normalisation}
+trading days. These assumptions are made based on the NYSE trading hours that shows a month may have
+between 19 to 23 trading days, each quarter may have 61 to 64 trading days, generally resulting in a total
+of 252 trading days \parencite{nyse_2020}.
 
+\section{Data normalisation}
+For each input feature, the percentage change over the previous period is calculated. For example if the feature
+is reported daily, the percentage change since the last day is calculated.
+
+Following this, the inputs are assumed to be normally distributed, and are scaled using the scale function of
+scikit-learn's preprocessing library. Based on values of that input feature, they are scaled with the following
+equation (\autoref{eq:sklearn-scale}):
+
+\begin{equation}
+    z = \frac{x - u}{s}
+    \label{eq:sklearn-scale}
+\end{equation}
+
+where x is the sampled value, u is the mean of all of the samples, and s is the standard deviation of the samples.
+
+This results in a value known as the z-score, a measure of how many standard deviations a value is from the mean value.
+99.7\% of z-score should be between -3 and +3, but there may be outliers that exceed these values.
 \section{Iteration 1}
 \subsection{Artificial intelligence model used}
+In the first iteration, the LSTM model was utilised in order to create the foundations for the CNN-LSTM model. The LSTM
+consists of LSTM layers and Dense layers, with the final Dense layer having an output of 2, representing one output for
+a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
+probabilities of each output. The LSTM and Dense layers utilised the 'tanh' (hyperbolic tangent) and 'relu'
+(REctified Linear Unit) activation functions respectively.
+
+The model was fit using the Adam optimiser with a learning rate of 0.001 and a decay of 1e-6. Adam is a popular
+and efficient algorithms for gradient descent.
+The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
+label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
+probability.
+
+\subsubsection{Layers and layer sizes}
+Various amounts of LSTM layers and Dense layers, as well as layer sizes for each. The accuracy of each model varied
+significantly. For each LSTM layer, there was also a:
+\begin{itemize}
+    \item Dropout layer of 0.1 meaning a set of neurons may be
+    deactivated 10\% of the time at random; it is a method of regularisation to prevent overfitting.
+    \item Batch normalisation layer meaning the outputs of that layer were scaled to aid efficiency of the model.
+\end{itemize}
+The following models were created and compared with the following variables:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Layer Type & Number of Layers & Layer Size \\
+        \hline\hline
+        LSTM & 1, 2, 3 & 32, 64, 128 \\
+        Dense & 1, 2, 3 & 32, 64, 128 \\
+        \hline
+    \end{tabular}
+    \caption{Table showing layers and layer sizes for Iteration 1}
+    \label{tab:iteration1_layers}
+\end{table}
+\FloatBarrier
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/results/iteration1_all_accuracy.pdf}
+    \caption[Figure of accuracies of various layer variables for Iteration 1]{Figure of all accuracies of the combinations of LSTM Layers and Dense Layers, and their training and validation results}
+    \label{fig:iteration1_all_accuracy}
+\end{figure}
+
+\subsubsection{Diagram of model used}
+The diagram below shows the best model identified in iteration 1 of this project. There are x LSTM layers,
+each with a layer size of y; and x Dense layers, each with a layer size of y. From the diagram, you are able
+to see the input shape the first LSTM layer takes: (None, 21, 4); this represents the fact there is a sequence
+length of 21 (trading days) and 4 input features. For the purposes of this diagram, the 'None' value
+of each layer's shape can be ignored. This LSTM layer also outputs a sequence of the same shape as it returns
+a sequence. The following LSTM layer outputs a layer shape of (None, 21, 64); it is fairly abstract
+but it represents 64 neurons in the next layer, also returning a sequence of 21.
+The final LSTM layer has an output shape of (None, 64); there is no 21 as no sequence is returned.
+The next layer is a Dense layer, with an input shape of (None, 64).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/results/model_1.png}
+    \caption[Figure of accuracies of various layer variables for Iteration 1]{Figure of all accuracies of the combinations of LSTM Layers and Dense Layers, and their training and validation results}
+    \label{fig:iteration1_model}
+\end{figure}
+
 \subsection{Sequence length used}
+A sequence length of 21 days (approximately 1 month) was used for each of the input features of this model.
+This is a figure that has not in this iteration been tested to be the optimal sequence length, but with a short
+test of various sequence lengths, it has been found to be sufficient to produce values over 50\% accuracy.
 \subsection{Input features}
-\subsection{Accuracy of iteration 1}
-\subsection{Limitations of iteration 1}
+The input features for this mode were as follows:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Input Feature & Function Applied & Scaled \\
+        \hline\hline
+        SPY Closing Price & \% Change vs Previous Day& Standard \\
+        SPY Volume & \% Change vs Previous Day& Standard \\
+        VIX (Volatility Index) & \% Change vs Previous Day& Standard \\
+        Put-to-Call Ratio & \% Change vs Previous Day& Standard \\
+        \hline
+    \end{tabular}
+    \caption{Table showing input features for Iteration 1}
+    \label{tab:iteration1_input_features}
+\end{table}
+\FloatBarrier

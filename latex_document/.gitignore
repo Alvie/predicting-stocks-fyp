@@ -2,6 +2,7 @@
 
 !figures/*
 !figures*
+!figures/results/*
 
 !.gitignore
 
