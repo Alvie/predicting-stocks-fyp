@@ -182,7 +182,7 @@ where x is the sampled value, u is the mean of all of the samples, and s is the 
 This results in a value known as the z-score, a measure of how many standard deviations a value is from the mean value.
 99.7\% of z-score should be between -3 and +3, but there may be outliers that exceed these values.
 \section{Iteration 1}
-\subsection{Artificial intelligence model used}
+\subsection{Artificial intelligence model used}\label{ssec:iteration1:ai_model}
 In the first iteration, the LSTM model was utilised in order to create the foundations for the CNN-LSTM model. The LSTM
 consists of LSTM layers and Dense layers, with the final Dense layer having an output of 2, representing one output for
 a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
@@ -194,55 +194,6 @@ and efficient algorithms for gradient descent.
 The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
 label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
 probability.
-
-\subsubsection{Layers and layer sizes}
-Various amounts of LSTM layers and Dense layers, as well as layer sizes for each. The accuracy of each model varied
-significantly. For each LSTM layer, there was also a:
-\begin{itemize}
-    \item Dropout layer of 0.1 meaning a set of neurons may be
-    deactivated 10\% of the time at random; it is a method of regularisation to prevent overfitting.
-    \item Batch normalisation layer meaning the outputs of that layer were scaled to aid efficiency of the model.
-\end{itemize}
-The following models were created and compared with the following variables:
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|c|c|c|}
-        \hline
-        Layer Type & Number of Layers & Layer Size \\
-        \hline\hline
-        LSTM & 1, 2, 3 & 32, 64, 128 \\
-        Dense & 1, 2, 3 & 32, 64, 128 \\
-        \hline
-    \end{tabular}
-    \caption{Table showing layers and layer sizes for Iteration 1}
-    \label{tab:iteration1_layers}
-\end{table}
-\FloatBarrier
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\columnwidth]{figures/results/iteration1_all_accuracy.pdf}
-    \caption[Figure of accuracies of various layer variables for Iteration 1]{Figure of all accuracies of the combinations of LSTM Layers and Dense Layers, and their training and validation results}
-    \label{fig:iteration1_all_accuracy}
-\end{figure}
-
-\subsubsection{Diagram of model used}
-The diagram below shows the best model identified in iteration 1 of this project. There are x LSTM layers,
-each with a layer size of y; and x Dense layers, each with a layer size of y. From the diagram, you are able
-to see the input shape the first LSTM layer takes: (None, 21, 4); this represents the fact there is a sequence
-length of 21 (trading days) and 4 input features. For the purposes of this diagram, the 'None' value
-of each layer's shape can be ignored. This LSTM layer also outputs a sequence of the same shape as it returns
-a sequence. The following LSTM layer outputs a layer shape of (None, 21, 64); it is fairly abstract
-but it represents 64 neurons in the next layer, also returning a sequence of 21.
-The final LSTM layer has an output shape of (None, 64); there is no 21 as no sequence is returned.
-The next layer is a Dense layer, with an input shape of (None, 64).
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\columnwidth]{figures/results/model_1.png}
-    \caption[Figure of accuracies of various layer variables for Iteration 1]{Figure of all accuracies of the combinations of LSTM Layers and Dense Layers, and their training and validation results}
-    \label{fig:iteration1_model}
-\end{figure}
 
 \subsection{Sequence length used}
 A sequence length of 21 days (approximately 1 month) was used for each of the input features of this model.
@@ -265,4 +216,50 @@ The input features for this mode were as follows:
     \caption{Table showing input features for Iteration 1}
     \label{tab:iteration1_input_features}
 \end{table}
+\FloatBarrier
+
+\subsection{Layers and layer sizes} \label{ssec:iteration1layers}
+Various amounts of LSTM layers and Dense layers, as well as layer sizes for each. The accuracy of each model varied
+significantly. For each LSTM layer, there was also a:
+\begin{itemize}
+    \item Dropout layer of 0.1 meaning a set of neurons may be
+    deactivated 10\% of the time at random; it is a method of regularisation to prevent overfitting.
+    \item Batch normalisation layer meaning the outputs of that layer were scaled to aid efficiency of the model.
+\end{itemize}
+The following models were created and compared with the following variables:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Layer Type & Number of Layers & Layer Size \\
+        \hline\hline
+        LSTM & 1, 2, 3 & 32, 64, 128 \\
+        Dense & 1, 2, 3 & 32, 64, 128 \\
+        \hline
+    \end{tabular}
+    \caption{Table showing layers and layer sizes for Iteration 1}
+    \label{tab:iteration1_layers}
+\end{table}
+\FloatBarrier
+
+\subsection{Diagram of model used}
+The diagram below (\autoref{fig:iteration1_model}) shows the best model identified in iteration 1 of this project. There is one LSTM layer with
+a layer size of 32; and two Dense layers, one with a layer size of 32 and one with a layer size of 2.
+From the diagram, it is shown that the input shape the first LSTM layer takes: (None, 21, 4); this represents the
+fact there is a sequence length of 21 (trading days) and 4 input features. For the purposes of this
+diagram, the 'None' value of each layer's shape can be ignored. This LSTM layer does not return a sequence, so its
+output has a shape of (None, 32); it is fairly abstract but represents that there are 32 neurons in the next layer.
+Dropouts and Batch Normalisation layers are added to aid with regularisation and optimisation of the model.
+The next layer is a Dense layer, with an input shape of (None, 32) and an output of the same shape. An additional
+dropout layer is applied here before transitioning to the final Dense layer that has an output shape of (None, 2)
+which represents the fact there are two potential outputs for the inputs: whether the following trading day
+is an up or down day.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=0.95\textheight]{figures/results/iteration1_model.png}
+    \caption[Diagram of iteration 1 layers]{Diagram of iteration 1 layers}
+    \label{fig:iteration1_model}
+\end{figure}
 \FloatBarrier
