@@ -3,15 +3,23 @@
 As mentioned in \autoref{ssec:iteration1layers}, various combinations of LSTM layers and Dense layers were tested,
 each with various sizes. The results of all of the models can be seen in the \autoref{fig:iteration1_all_accuracy}
 The results of the best model can be seen in \autoref{fig:iteration1_best_accuracy}
+
 \subsection{Accuracies of all tests}
+In the charts below, each line represents a combination of different layer types and sizes of the Dense and LSTM layers of the chart.
+For each line in the accuracy chart, there exists another line in the loss chart with the same colour. There are 16 lines in total
+for this iteration as there were 
 \begin{figure}[ht]
     \centering
-    \subfloat[\centering Iteration 1 Validation Accuracies]{{\includegraphics[width=0.45\columnwidth]{figures/results/iteration1_all_accuracy.pdf}}}%
-    \qquad
-    \subfloat[\centering Iteration 1 Validation Losses]{{\includegraphics[width=0.45\columnwidth]{figures/results/iteration1_all_loss.pdf}}}%
-    
-    \caption[Figure of accuracies and losses for Iteration 1]{Figure of all validation accuracies and losses of the combinations of LSTM Layers and Dense Layers}
+    \includegraphics[width=0.95\columnwidth]{figures/results/lstm_iteration1_all_accuracy.eps}
+    \caption[Figure of accuracies and losses for Iteration 1]{Figure of all validation accuracies of the combinations of LSTM Layers and Dense Layers}
     \label{fig:iteration1_all_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/lstm_iteration1_all_loss.eps}
+    \caption[Figure of accuracies and losses for Iteration 1]{Figure of all validation losses of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration1_all_loss}
 \end{figure}
 \FloatBarrier
 
@@ -23,16 +31,21 @@ loss is an indicator of overfitting, it was used to filter models showing overfi
 \subsection{Accuracies of the best result}
 \begin{figure}[ht]
     \centering
-    \subfloat[\centering Iteration 1 Validation Accuracies]{{\includegraphics[width=0.45\columnwidth]{figures/results/iteration1_1lstm32_2dense32_accuracy.pdf}}}%
-    \qquad
-    \subfloat[\centering Iteration 1 Validation Losses]{{\includegraphics[width=0.45\columnwidth]{figures/results/iteration1_1lstm32_2dense32_loss.pdf}}}%
-    \caption[Figure of losses of the best model for Iteration 1]{Figure of losses of the best model of Iteration 1}
+    \includegraphics[width=0.95\columnwidth]{figures/results/lstm_iteration1_1l64_3d64_accuracy.eps}
+    \caption[Figure of accuracies and losses for Iteration 1]{Figure of all validation accuracies of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration1_best_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/lstm_iteration1_1l64_3d64_loss.eps}
+    \caption[Figure of accuracies and losses for Iteration 1]{Figure of all validation losses of the combinations of LSTM Layers and Dense Layers}
     \label{fig:iteration1_best_loss}
 \end{figure}
 \FloatBarrier
-The best model found within this iteration was one with a single LSTM layer of size 32 and a single Dense layer of size 32 followed
-by the final Dense layer of size 2. The validation loss shows little overfitting. At 20 epochs, the validation accuracy
-reaches its highest value of 55.17\% whilst the training accuracy reached above 56.17\%.
+The best model found within this iteration was one with a single LSTM layer of size 64 and two Dense layers of size 64 followed
+by the final Dense layer of size 2. The validation loss shows little overfitting. At 25 epochs, the validation accuracy
+reaches its highest value of 56.69\% whilst the training accuracy reached above 53.49\%.
 \subsection{Evaluation of iteration 1}
 With a validation accuracy above 55\% it suggests that there is improvement above a random choice.
 There are various limitations with regards to iteration 1. This iteration does not test various combinations of input features nor does
@@ -44,14 +57,21 @@ As mentioned in \autoref{ssec:iteration1layers}, various combinations of LSTM la
 each with various sizes. The results of all of the models can be seen in the \autoref{fig:iteration1_all_accuracy}
 The results of the best model can be seen in \autoref{fig:iteration1_best_accuracy}
 \subsection{Accuracies of all tests}
+In the charts below, each line represents a combination of different layer types and sizes of the Dense and LSTM layers of the chart.
+For each line in the accuracy chart, there exists another line in the loss chart with the same colour. There are 16 lines in total
+for this iteration as there were 
 \begin{figure}[ht]
     \centering
-    \subfloat[\centering Iteration 2 Validation Accuracies]{{\includegraphics[width=0.45\columnwidth]{figures/results/iteration2_all_accuracy.pdf}}}%
-    \qquad
-    \subfloat[\centering Iteration 2 Validation Losses]{{\includegraphics[width=0.45\columnwidth]{figures/results/iteration2_all_loss.pdf}}}%
-    
-    \caption[Figure of accuracies and losses for Iteration 1]{Figure of all validation accuracies and losses of the combinations of LSTM Layers and Dense Layers}
-    \label{fig:iteration1_all_accuracy}
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_all_accuracy.eps}
+    \caption[Figure of accuracies and losses for Iteration 2]{Figure of all validation accuracies of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration2_all_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_all_loss.eps}
+    \caption[Figure of accuracies and losses for Iteration 2]{Figure of all validation losses of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration2_all_loss}
 \end{figure}
 \FloatBarrier
 
@@ -60,4 +80,62 @@ The validation losses using the sparse categorical loss function as described ea
 were used to help identify which models had the lowest error rate; and as an increasing validation
 loss is an indicator of overfitting, it was used to filter models showing overfitting.
 
-\subsection{Evaluation of iteration 1}
+\subsection{Accuracies of the best result}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_1c32_1d32_accuracy.eps}
+    \caption[Figure of accuracies and losses for Iteration 2]{Figure of all validation accuracies of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration2_best_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_1c32_1d32_loss.eps}
+    \caption[Figure of accuracies and losses for Iteration 2]{Figure of all validation losses of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration2_best_loss}
+\end{figure}
+\FloatBarrier
+
+\section{Accuracy of Iteration 3}
+As mentioned in \autoref{ssec:iteration1layers}, various combinations of LSTM layers and Dense layers were tested,
+each with various sizes. The results of all of the models can be seen in the \autoref{fig:iteration1_all_accuracy}
+The results of the best model can be seen in \autoref{fig:iteration1_best_accuracy}
+\subsection{Accuracies of all tests}
+In the charts below, each line represents a combination of different layer types and sizes of the Dense and LSTM layers of the chart.
+For each line in the accuracy chart, there exists another line in the loss chart with the same colour. There are 16 lines in total
+for this iteration as there were 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_all_accuracy.eps}
+    \caption[Figure of accuracies and losses for Iteration 3]{Figure of all validation accuracies of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration3_all_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_all_loss.eps}
+    \caption[Figure of accuracies and losses for Iteration 3]{Figure of all validation losses of the combinations of LSTM Layers and Dense Layers}
+    \label{fig:iteration3_all_loss}
+\end{figure}
+\FloatBarrier
+
+There are varying degrees of success with different combinations of layers; some do not improve in accuracy and others do.
+The validation losses using the sparse categorical loss function as described earlier in \autoref{ssec:iteration1:ai_model}
+were used to help identify which models had the lowest error rate; and as an increasing validation
+loss is an indicator of overfitting, it was used to filter models showing overfitting.
+
+\subsection{Accuracies of the best result}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_1c32_1d32_accuracy.eps}
+    \caption[Figure of accuracies and losses for Iteration 3]{Figure of all validation accuracies of the combinations of CNN and LSTM Layers and Dense Layers}
+    \label{fig:iteration3_best_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn_iteration2_1c32_1d32_loss.eps}
+    \caption[Figure of accuracies and losses for Iteration 3]{Figure of all validation losses of the combinations of CNN and LSTM Layers and Dense Layers}
+    \label{fig:iteration3_best_loss}
+\end{figure}
+\FloatBarrier
