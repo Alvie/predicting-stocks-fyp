@@ -238,6 +238,19 @@ This results in a value known as the z-score, a measure of how many standard dev
 all values are clipped to be within the range -3 and +3, and then this range is scaled to be between -1 and +1 for optimised
 operation within the artificial intelligence models.
 
+\subsection{Training / Validation Split}
+The dataset includes data from November 2006 to March 2022; the dataset is split 80:20 between training data and
+validation data. This means March 2019 is the cut off period betweeen the training and validation datasets. This
+results in 2730 samples for the training data and 560 samples for the validation data after accounting for some
+values that are removed due to them having N/A values.
+
+\subsection{Data balancing}
+In order to ensure the artificial intelligence models do not have any biases associated with them, each of the training
+and validation datasets will be shuffled to ensure the model is able to generalise rather than learn. Furthermore, once
+shuffled, the number of sequences that result in an positive trading day are counted as well as the number of sequences that result in
+a negative day. The minimum of the two are chosen to ensure there is an even split of inputs that result in a positive trading day,
+and inputs that result in a negative trading day.
+
 \section{Iteration 1}
 \subsection{Artificial intelligence model used}\label{ssec:iteration1_ai_model}
 In the first iteration, the LSTM model was utilised in order to create the foundations for the CNN-LSTM model. The LSTM
@@ -260,7 +273,7 @@ test of various sequence lengths, it has been found to be sufficient to produce 
 The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
 
 \subsection{Layers and layer sizes} \label{ssec:iteration1layers}
-Various amounts of LSTM layers and Dense layers, as well as layer sizes for each. The accuracy of each model varied
+Various amounts of LSTM layers and Dense layers, as well as layer sizes for each were tested. The accuracy of each model varied
 significantly. For each LSTM layer, there was also a:
 \begin{itemize}
     \item Dropout layer of 0.4 meaning a set of neurons may be
@@ -285,22 +298,92 @@ The following models were created and compared with the following variables:
 \FloatBarrier
 
 \subsection{Diagram of model used}
-The diagram below (\autoref{fig:iteration1_model}) shows the best model identified in iteration 1 of this project. There is one LSTM layer with
-a layer size of 32; and two Dense layers, one with a layer size of 32 and one with a layer size of 2.
-From the diagram, it is shown that the input shape the first LSTM layer takes: (None, 21, 4); this represents the
-fact there is a sequence length of 21 (trading days) and 4 input features. For the purposes of this
-diagram, the 'None' value of each layer's shape can be ignored. This LSTM layer does not return a sequence, so its
-output has a shape of (None, 32); it is fairly abstract but represents that there are 32 neurons in the next layer.
-Dropouts and Batch Normalisation layers are added to aid with regularisation and optimisation of the model.
-The next layer is a Dense layer, with an input shape of (None, 32) and an output of the same shape. An additional
-dropout layer is applied here before transitioning to the final Dense layer that has an output shape of (None, 2)
-which represents the fact there are two potential outputs for the inputs: whether the following trading day
-is an up or down day.
+The diagram below (\autoref{fig:iteration1_model}) shows the best model identified in iteration 1 of this project.
+There are two LSTM layers with a layer size of 64; and two Dense layers, one with a layer size of 32 and one with
+a layer size of 2. For the purposes of this diagram, the 'None' value of each layer's shape can be ignored.
 
-% \begin{figure}[ht]
-%     \centering
-%     \includegraphics[height=0.95\textheight]{figures/results/iteration1_model.png}
-%     \caption[Diagram of iteration 1 layers]{Diagram of iteration 1 layers}
-%     \label{fig:iteration1_model}
-% \end{figure}
-% \FloatBarrier
+From the diagram, it is shown that the input shape the first LSTM layer takes: (None, 21, 31); this represents the
+fact there is a sequence length of 21 (trading days) and 31 input features.  This LSTM layer returns a sequence, so its
+output has a shape of (None, 21, 64); it is fairly abstract but represents that there are 64 neurons in the next layer.
+As the sequences are returned, the next layers also have input and output shapes of (None, 21, 64). The following LSTM
+layer however does not return a sequence, so its output shape is (None, 64).
+Dropouts and Batch Normalisation layers are added to aid with regularisation and optimisation of the model.
+The next layer is a Dense layer, with an input shape of (None, 64) and an output of the shape (None, 32). An additional
+dropout layer is applied here before transitioning to the final Dense layer that has an output shape of (None, 2)
+which represents the fact there are two potential outputs for the inputs: whether the following day
+is an positive or negative trading day.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=0.95\textheight]{figures/results/lstm/model.png}
+    \caption[Diagram of iteration 1 layers]{Diagram of iteration 1 layers}
+    \label{fig:iteration1_model}
+\end{figure}
+\FloatBarrier
+
+\section{Iteration 2}
+\subsection{Artificial intelligence model used}\label{ssec:iteration2_ai_model}
+In the second iteration, the CNN model was utilised in order to create the foundations for the CNN-LSTM model. The CNN
+consists of Conv1D layers and Dense layers, with the final Dense layer having an output of 2, representing one output for
+a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
+probabilities of each output. The Conv1D and Dense layers utilised the 'relu' (REctified Linear Unit) activation
+function.
+
+The model was fit using the Adam optimiser with a learning rate of 0.001 and a decay of 1e-6. Adam is a popular
+and efficient algorithms for gradient descent.
+The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
+label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
+probability.
+
+\subsection{Sequence length used}
+Contrary to the LSTM model, the CNN model does not use a sequence of historic data; it only uses the previous day's
+data as the input to the model.
+
+\subsection{Input features}
+The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
+
+\subsection{Layers and layer sizes} \label{ssec:iteration2layers}
+Various amounts of Conv1D layers and Dense layers, as well as layer sizes for each were tested. The accuracy of each model varied
+significantly. For each Conv1D layer, there was also a MaxPooling1D layer following it; this created a downsampled
+feature map which aids in optimising the model's efficiency.
+
+Following the Conv1D layers, there was also a Flatten layer applied to ensure the the following Dense layers
+were able to accept the shape of the output of the Convolutional layers.
+
+The following models were created and compared with the following variables:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Layer Type & Number of Layers & Layer Size \\
+        \hline\hline
+        Conv1D & 1, 2 & 16, 32 \\
+        Dense & 1, 2 & 32, 64 \\
+        \hline
+    \end{tabular}
+    \caption{Table showing layers and layer sizes for Iteration 2}
+    \label{tab:iteration2_layers}
+\end{table}
+\FloatBarrier
+
+\subsection{Diagram of model used}
+The diagram below (\autoref{fig:iteration2_model}) shows the best model identified in iteration 2 of this project.
+There is one Conv1D layer with a layer size of 32; and one Dense layer with a layer size of 2.
+For the purposes of this diagram, the 'None' value of each layer's shape can be ignored.
+
+From the diagram, it is shown that the input shape the first Conv1D layer takes: (None, 1, 31); this represents the
+fact there are 31 input features.  This Conv1D layer has an output shape of (None, 1, 32); it is fairly abstract
+but represents that there are 32 neurons in the next layer. This output is then passed to the MaxPooling1D Layer
+which downsamples it to create a feature map. A Flatten layer is applied to mutate the shape from (None, 1, 32) to 
+(None, 32) beforetransitioning to the final Dense layer that has an output shape of (None, 2)
+which represents the fact there are two potential outputs for the inputs: whether the following day
+is an positive or negative trading day.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/cnn/model.png}
+    \caption[Diagram of iteration 2 layers]{Diagram of iteration 2 layers}
+    \label{fig:iteration2_model}
+\end{figure}
+\FloatBarrier
