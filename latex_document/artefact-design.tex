@@ -100,14 +100,14 @@ sources for used in the data collection process are also present within this lis
         \textbf{Source:} US Dept. of the Treasury - Treasury Par Yield Curve Rates:\\
         % \seqsplit{https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve}
         \item Effective Federal Funds Rate\\
-        \textbf{Reasoning:} EFFR is the interest rate banks charge one another for overnight loans, a change in 
+        \textbf{Reasoning:} EFFR is the interest rate banks charge one another for overnight loans, a change in
         EFFR may affect the loans banks make / take and thus affect the money the banks have available to allocate
         in the stock market; this may affect the return of the stock market index.\\
         \textbf{Source:} Federal Reserve Economic Data - EFFR:\\
         https://fred.stlouisfed.org/series/EFFR
         \item Repurchase / Reverse Repurchase Agreements\\
         \textbf{Reasoning:} A change in utilisation of repurchase agreements may indicate if banks expect
-        a greater return elsewhere and how banks are allocating money. This may have an impact on the 
+        a greater return elsewhere and how banks are allocating money. This may have an impact on the
         return of the stock market index\\
         \textbf{Source:} New York Fed - Repo:\\
         https://www.newyorkfed.org/markets/desk-operations/repo
@@ -130,7 +130,7 @@ sources for used in the data collection process are also present within this lis
         \end{itemize}
         \textbf{Reasoning:} It is believed that the currency exchange rates may be an indicator of confidence
         of the country of the currency, thus a change in currency rate may result in a change of portfolio
-        allocations of participants in that country's stock market.        
+        allocations of participants in that country's stock market.
     \end{itemize}
     \item Sentiment
     \begin{itemize}
@@ -370,7 +370,7 @@ For the purposes of this diagram, the 'None' value of each layer's shape can be 
 From the diagram, it is shown that the input shape the first Conv1D layer takes: (None, 1, 31); this represents the
 fact there are 31 input features.  This Conv1D layer has an output shape of (None, 1, 32); it is fairly abstract
 but represents that there are 32 neurons in the next layer. This output is then passed to the MaxPooling1D Layer
-which downsamples it to create a feature map. A Flatten layer is applied to mutate the shape from (None, 1, 32) to 
+which downsamples it to create a feature map. A Flatten layer is applied to mutate the shape from (None, 1, 32) to
 (None, 32) before transitioning to the final Dense layer that has an output shape of (None, 2)
 which represents the fact there are two potential outputs for the inputs: whether the following day
 is an positive or negative trading day.
@@ -464,14 +464,101 @@ layer was added to the model, and then the final Dense layer of output shape (No
 
 \subsection{Diagram of model used}
 The diagram below (\autoref{fig:iteration4_model}) shows the concatenation of the previous three models (LSTM, CNN, CNN-LSTM)
-The Concatenate layer accepts the outputs from each of the three models and as such has an input shape of 
+The Concatenate layer accepts the outputs from each of the three models and as such has an input shape of
 {[(None, 32), (None, 32), (None, 64)]}. The Concatenate layer has an output of shape (None, 128) which is passed to a Dense
 layer which outputs a shape of (None, 32) which is passed to the final layer which has an output shape of (None, 2).
-\begin{figure}[ht]
+\begin{figure}[p]
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/results/concat/model.png}
+    \makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/results/concat/model.png}}
     \caption[Diagram of iteration 4 layers]{Diagram of iteration 4 layers}
     \label{fig:iteration4_model}
 \end{figure}
 \FloatBarrier
 
+\section{Iteration 5}
+\subsection{Artificial intelligence model used}\label{ssec:iteration5_ai_model}
+In the fifth iteration, the previous four iterations were compared to identify which model had the best results.
+This was found to be the CNN-LSTM hybrid model from \autoref{ssec:iteration3_ai_model}
+
+\subsection{Sequence length used}
+Various sequence lengths were used in the testing of this model, including: previous two days,
+previous week (5 trading days), previous month (21 trading days), and previous quarter (previous 63 trading days).
+These all affect the input shape to the neural network, but layers following the input layer are unmodified from
+what can be seen in \autoref{fig:iteration3_model} of Iteration 3.
+
+\subsection{Input features}
+Various combinations of input features were used in this iteration. All of the combinations of input features included the
+price percentage change vs the previous day. The combinations of input features are as follows:
+
+\begin{itemize}
+    \item Price only
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+    \end{itemize}
+    \item Price extended set + Volume + Volatility
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item SPY price percentage change vs previous 2 days
+        \item SPY price percentage change vs previous week
+        \item SPY price percentage change vs previous month
+        \item SPY price percentage change vs previous quarter
+        \item SPY volume percentage change vs previous day
+        \item VIX (Volatility Index) percentage change vs previous day
+    \end{itemize}
+    \item Price + M1 Money Supply + GDP
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item M1 Money Supply percentage change vs previous week
+        \item GDP percentage change vs previous quarter
+    \end{itemize}
+    \item Price + Treasury Yields
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item 1 Month treasury yield percentage change vs previous day
+        \item 3 Month treasury yield percentage change vs previous day
+        \item 1 Year treasury yield percentage change vs previous day
+        \item 2 Year treasury yield percentage change vs previous day
+        \item 5 Year treasury yield percentage change vs previous day
+        \item 10 Year treasury yield percentage change vs previous day
+        \item 20 Year treasury yield percentage change vs previous day
+        \item 30 Year treasury yield percentage change vs previous day
+    \end{itemize}
+    \item Price + EFFR + Repurchase Agreements
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Effective Federal Funds Rate percentage change vs previous day
+        \item Repurchase Agreement percentage change vs previous day
+        \item Repurchase Agreement Rate percentage change vs previous day
+        \item Reverse Repurchase Agreement percentage change vs previous day
+        \item Reverse Repurchase Agreement Rate percentage change vs previous day
+    \end{itemize}
+    \item Price + Gold + Currency
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Gold Price percentage change vs previous day
+        \item USDGBP percentage change vs previous day
+        \item USDEUR percentage change vs previous day
+        \item USDJPY percentage change vs previous day
+    \end{itemize}
+    \item Price + Put-to-Call Ratio
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Put-to-Call ratio percentage change vs previous day
+    \end{itemize}
+    \item Price + Inflation Rate
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Inflation rate percentage change vs previous month
+    \end{itemize}
+    \item Price + Employment Rate
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Employment rate percentage change vs previous month
+    \end{itemize}
+    \item Price + Other Sentiment Indicators
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Consumer Sentiment (University of Michigan) percentage change vs previous month
+        \item Consumer Confidence (OECD) percentage change vs previous month
+    \end{itemize}
+\end{itemize}
