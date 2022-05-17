@@ -251,6 +251,13 @@ shuffled, the number of sequences that result in an positive trading day are cou
 a negative day. The minimum of the two are chosen to ensure there is an even split of inputs that result in a positive trading day,
 and inputs that result in a negative trading day.
 
+\section{Model Fitting}
+Each of the models in this project were fit using the Adam optimiser with a learning rate of 0.001 and a decay of
+1e-6. Adam is a popular and efficient algorithm for gradient descent in deep learning models.
+The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
+label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
+probability.
+
 \section{Iteration 1}
 \subsection{Artificial intelligence model used}\label{ssec:iteration1_ai_model}
 In the first iteration, the LSTM model was utilised in order to create the foundations for the CNN-LSTM model. The LSTM
@@ -258,12 +265,6 @@ consists of LSTM layers and Dense layers, with the final Dense layer having an o
 a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
 probabilities of each output. The LSTM and Dense layers utilised the 'tanh' (hyperbolic tangent) and 'relu'
 (REctified Linear Unit) activation functions respectively.
-
-The model was fit using the Adam optimiser with a learning rate of 0.001 and a decay of 1e-6. Adam is a popular
-and efficient algorithms for gradient descent.
-The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
-label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
-probability.
 
 \subsection{Sequence length used}
 A sequence length of 21 days (approximately 1 month) was used for each of the input features of this model.
@@ -329,12 +330,6 @@ a negative day (0) and another for a positive day (1), and utilised the 'softmax
 probabilities of each output. The Conv1D and Dense layers utilised the 'relu' (REctified Linear Unit) activation
 function.
 
-The model was fit using the Adam optimiser with a learning rate of 0.001 and a decay of 1e-6. Adam is a popular
-and efficient algorithms for gradient descent.
-The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
-label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
-probability.
-
 \subsection{Sequence length used}
 Contrary to the LSTM model, the CNN model does not use a sequence of historic data; it only uses the previous day's
 data as the input to the model.
@@ -376,7 +371,7 @@ From the diagram, it is shown that the input shape the first Conv1D layer takes:
 fact there are 31 input features.  This Conv1D layer has an output shape of (None, 1, 32); it is fairly abstract
 but represents that there are 32 neurons in the next layer. This output is then passed to the MaxPooling1D Layer
 which downsamples it to create a feature map. A Flatten layer is applied to mutate the shape from (None, 1, 32) to 
-(None, 32) beforetransitioning to the final Dense layer that has an output shape of (None, 2)
+(None, 32) before transitioning to the final Dense layer that has an output shape of (None, 2)
 which represents the fact there are two potential outputs for the inputs: whether the following day
 is an positive or negative trading day.
 
@@ -385,5 +380,77 @@ is an positive or negative trading day.
     \includegraphics[width=0.95\columnwidth]{figures/results/cnn/model.png}
     \caption[Diagram of iteration 2 layers]{Diagram of iteration 2 layers}
     \label{fig:iteration2_model}
+\end{figure}
+\FloatBarrier
+
+\section{Iteration 3}
+\subsection{Artificial intelligence model used}\label{ssec:iteration3_ai_model}
+In the third iteration, a hybrid approach of the previous models were used to create a CNN-LSTM model.
+This model consists of Conv1D layers, LSTM layers and Dense layers with the final Dense layer having an output of 2, representing one output for
+a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
+probabilities of each output.
+
+\subsection{Sequence length used}
+Similarly to the LSTM model, this CNN-LSTM hybrid model does take a sequence as an input.
+
+A sequence length of 21 days (approximately 1 month) was used for each of the input features of this model.
+This is a figure that has not in this iteration been tested to be the optimal sequence length, but with a short
+test of various sequence lengths, it has been found to be sufficient to produce values over 50\% accuracy.
+
+\subsection{Input features}
+The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
+
+\subsection{Layers and layer sizes} \label{ssec:iteration3layers}
+Various amounts of Conv1D layers, LSTM layers and Dense layers, as well as layer sizes for each were tested. The accuracy of each model varied
+significantly. For each LSTM layer, there was also a:
+\begin{itemize}
+    \item Dropout layer of 0.4 meaning a set of neurons may be
+    deactivated 40\% of the time at random; it is a method of regularisation to prevent overfitting.
+    \item Batch normalisation layer meaning the outputs of that layer were scaled to aid efficiency of the model.
+\end{itemize}
+
+The following models were created and compared with the following variables:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Layer Type & Number of Layers & Layer Size \\
+        \hline\hline
+        Conv1D & 1, 2 & 16, 32 \\
+        LSTM & 1, 2 & 16, 32 \\
+        Dense & 2, 3 & 32, 64 \\
+        \hline
+    \end{tabular}
+    \caption{Table showing layers and layer sizes for Iteration 3}
+    \label{tab:iteration3_layers}
+\end{table}
+\FloatBarrier
+
+\subsection{Diagram of model used}
+The diagram below (\autoref{fig:iteration3_model}) shows the best model identified in iteration 3 of this project.
+There are two Conv1D layers with a layer size of 32, 1 LSTM layer with a layer size of 16 and two Dense layers, one
+with a layer size of 64 and the final Dense layer having an output of 2, representing one output for
+a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
+probabilities of each output.
+
+For the purposes of this diagram, the 'None' value of each layer's shape can be ignored.
+
+From the diagram, it is shown that the input shape the first Conv1D layer takes: (None, 21, 31); this represents the
+fact there is a sequence length of 21 and there are 31 input features.  This Conv1D layer has an output shape of (None, 21, 32); it is fairly abstract
+but represents that a sequenced is passed to the next layer which has 32 neurons. This output is then passed to another
+Conv1D layer with the same Input and Output shapes. Following the Convolutional layers, there is an LSTM layer
+which takes the input (None, 21, 32). It does not return a sequence and also reduces the layer size to 16 to produce an
+output shape of (None, 16). Dropouts and Batch Normalisation layers are added to aid with regularisation and optimisation of the model.
+Following the LSTM layers, there are Dense layets, the first of which takes the input of shape (None, 16) from the
+LSTM layers and outputs a shape of (None, 64). Another Dropout layer is applied before transitioning to the final Dense layer that has an output shape of (None, 2)
+which represents the fact there are two potential outputs for the inputs: whether the following day
+is an positive or negative trading day.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=0.95\textheight]{figures/results/cnnlstm/model.png}
+    \caption[Diagram of iteration 3 layers]{Diagram of iteration 3 layers}
+    \label{fig:iteration3_model}
 \end{figure}
 \FloatBarrier
