@@ -152,6 +152,18 @@ sources for used in the data collection process are also present within this lis
         to change their portfolio allocations and thus affect the return of the stock market\\
         \textbf{Source:} US Bureau of Labor Statistics - Inflation:\\
         https://www.bls.gov/data/\#prices
+        \item Consumer Sentiment\\
+        \textbf{Reasoning:} It is believed that a change in consumer sentiment towards the economy
+        can cause market participants to change their portfolio allocations and thus affect the
+        return of the stock market\\
+        \textbf{Source:} University of Michigan - Consumer Sentiment:\\
+        https://fred.stlouisfed.org/series/UMCSENT
+        \item Consumer Confidence\\
+        \textbf{Reasoning:} It is believed that a change in consumer confidence towards the economy
+        can cause market participantsto change their portfolio allocations and thus affect the return
+        of the stock market\\
+        \textbf{Source:} Federal Reserve Economic Data - OECD Indicator for the US:\\
+        https://fred.stlouisfed.org/series/CSCICP03USM665S
     \end{itemize}
 \end{itemize}
 
@@ -164,9 +176,51 @@ trading days. These assumptions are made based on the NYSE trading hours that sh
 between 19 to 23 trading days, each quarter may have 61 to 64 trading days, generally resulting in a total
 of 252 trading days \parencite{nyse_2020}.
 
-\section{Data normalisation}
+\section{Data preprocessing}
+\subsection{Data normalisation}
 For each input feature, the percentage change over the previous period is calculated. For example if the feature
-is reported daily, the percentage change since the last day is calculated.
+is reported daily, the percentage change since the last day is calculated. For the closing price of the stock
+market index, the percentage change since the last two days, last week, last month and last quarter were also
+included.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Input Feature & Function Applied \\
+        \hline\hline
+        SPY Closing Price & \makecell{\% Change vs Previous Day \\
+        \% Change vs Previous 2 Days\\
+        \% Change vs Previous Week\\
+        \% Change vs Previous Month\\
+        \% Change vs Previous Quarter} \\
+        SPY Volume & \% Change vs Previous Day \\
+        VIX (Volatility Index) & \% Change vs Previous Day \\
+        M1 Money Supply & \% Change vs Previous Week \\
+        GDP & \% Change vs Previous Quarter \\
+        \makecell{Treasury Yields\\
+        (1 Month, 3 Months, 1 Year, 2 Years, 5 Years\\
+        10 Years, 20 Years, 30 Years)}& \% Change vs Previous Day \\
+        EFFR & \% Change vs Previous Day \\
+        Repurchase Agreements & \% Change vs Previous Day \\
+        Repurchase Agreements Rates & \% Change vs Previous Day \\
+        Reverse Repurchase Agreements & \% Change vs Previous Day \\
+        Reverse Repurchase Agreements Rates & \% Change vs Previous Day \\
+        Gold Price & \% Change vs Previous Day \\
+        GBP Exchange Rate & \% Change vs Previous Day \\
+        EUR Exchange Rate & \% Change vs Previous Day \\
+        JPY Exchange Rate & \% Change vs Previous Day \\
+        Put-to-Call Ratio & \% Change vs Previous Day \\
+        Employment Rate & \% Change vs Previous Month \\
+        Inflation Rate & \% Change vs Previous Month \\
+        Consumer Sentiment & \% Change vs Previous Month \\
+        Consumer Confidence & \% Change vs Previous Month \\
+        \hline
+    \end{tabular}
+    \caption{Table showing input features for Iteration 1}
+    \label{tab:artefact_data_normalisation}
+\end{table}
+\FloatBarrier
 
 Following this, the inputs are assumed to be normally distributed, and are scaled using the scale function of
 scikit-learn's preprocessing library. Based on values of that input feature, they are scaled with the following
@@ -180,9 +234,12 @@ equation (\autoref{eq:sklearn-scale}):
 where x is the sampled value, u is the mean of all of the samples, and s is the standard deviation of the samples.
 
 This results in a value known as the z-score, a measure of how many standard deviations a value is from the mean value.
-99.7\% of z-score should be between -3 and +3, but there may be outliers that exceed these values.
+99.7\% of z-score should be between -3 and +3, but there may be outliers that exceed these values. In order to account for this,
+all values are clipped to be within the range -3 and +3, and then this range is scaled to be between -1 and +1 for optimised
+operation within the artificial intelligence models.
+
 \section{Iteration 1}
-\subsection{Artificial intelligence model used}\label{ssec:iteration1:ai_model}
+\subsection{Artificial intelligence model used}\label{ssec:iteration1_ai_model}
 In the first iteration, the LSTM model was utilised in order to create the foundations for the CNN-LSTM model. The LSTM
 consists of LSTM layers and Dense layers, with the final Dense layer having an output of 2, representing one output for
 a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
@@ -200,30 +257,14 @@ A sequence length of 21 days (approximately 1 month) was used for each of the in
 This is a figure that has not in this iteration been tested to be the optimal sequence length, but with a short
 test of various sequence lengths, it has been found to be sufficient to produce values over 50\% accuracy.
 \subsection{Input features}
-The input features for this mode were as follows:
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|c|c|c|}
-        \hline
-        Input Feature & Function Applied & Scaled \\
-        \hline\hline
-        SPY Closing Price & \% Change vs Previous Day& Standard \\
-        SPY Volume & \% Change vs Previous Day& Standard \\
-        VIX (Volatility Index) & \% Change vs Previous Day& Standard \\
-        Put-to-Call Ratio & \% Change vs Previous Day& Standard \\
-        \hline
-    \end{tabular}
-    \caption{Table showing input features for Iteration 1}
-    \label{tab:iteration1_input_features}
-\end{table}
-\FloatBarrier
+The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
 
 \subsection{Layers and layer sizes} \label{ssec:iteration1layers}
 Various amounts of LSTM layers and Dense layers, as well as layer sizes for each. The accuracy of each model varied
 significantly. For each LSTM layer, there was also a:
 \begin{itemize}
-    \item Dropout layer of 0.1 meaning a set of neurons may be
-    deactivated 10\% of the time at random; it is a method of regularisation to prevent overfitting.
+    \item Dropout layer of 0.4 meaning a set of neurons may be
+    deactivated 40\% of the time at random; it is a method of regularisation to prevent overfitting.
     \item Batch normalisation layer meaning the outputs of that layer were scaled to aid efficiency of the model.
 \end{itemize}
 The following models were created and compared with the following variables:
@@ -234,8 +275,8 @@ The following models were created and compared with the following variables:
         \hline
         Layer Type & Number of Layers & Layer Size \\
         \hline\hline
-        LSTM & 1, 2, 3 & 32, 64, 128 \\
-        Dense & 1, 2, 3 & 32, 64, 128 \\
+        LSTM & 1, 2 & 32, 64 \\
+        Dense & 2, 3 & 32, 64 \\
         \hline
     \end{tabular}
     \caption{Table showing layers and layer sizes for Iteration 1}
@@ -256,10 +297,10 @@ dropout layer is applied here before transitioning to the final Dense layer that
 which represents the fact there are two potential outputs for the inputs: whether the following trading day
 is an up or down day.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[height=0.95\textheight]{figures/results/iteration1_model.png}
-    \caption[Diagram of iteration 1 layers]{Diagram of iteration 1 layers}
-    \label{fig:iteration1_model}
-\end{figure}
-\FloatBarrier
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[height=0.95\textheight]{figures/results/iteration1_model.png}
+%     \caption[Diagram of iteration 1 layers]{Diagram of iteration 1 layers}
+%     \label{fig:iteration1_model}
+% \end{figure}
+% \FloatBarrier
