@@ -454,3 +454,24 @@ is an positive or negative trading day.
     \label{fig:iteration3_model}
 \end{figure}
 \FloatBarrier
+
+\section{Iteration 4}
+\subsection{Artificial intelligence model used}\label{ssec:iteration4_ai_model}
+In the fourth iteration, a hybrid approach of the previous models were used to create a concatenated model of each
+of the three previous iterations. The layer amounts and sizes of each previous model were not modified, apart from
+the final Dense layer being removed from each model. After the three models were concatenated, an additional Dense
+layer was added to the model, and then the final Dense layer of output shape (None, 2) was returned to the model.
+
+\subsection{Diagram of model used}
+The diagram below (\autoref{fig:iteration4_model}) shows the concatenation of the previous three models (LSTM, CNN, CNN-LSTM)
+The Concatenate layer accepts the outputs from each of the three models and as such has an input shape of 
+{[(None, 32), (None, 32), (None, 64)]}. The Concatenate layer has an output of shape (None, 128) which is passed to a Dense
+layer which outputs a shape of (None, 32) which is passed to the final layer which has an output shape of (None, 2).
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/results/concat/model.png}
+    \caption[Diagram of iteration 4 layers]{Diagram of iteration 4 layers}
+    \label{fig:iteration4_model}
+\end{figure}
+\FloatBarrier
+
