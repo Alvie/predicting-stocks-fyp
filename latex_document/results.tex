@@ -1,7 +1,7 @@
 \chapter{Results and evaluation} \label{chap:results}
 \section{Table of all results}
 e
-\section{Accuracy of Iteration 1}
+\section{Iteration 1 results}
 As mentioned in \autoref{ssec:iteration1layers}, various combinations of LSTM layers and Dense layers were tested,
 each with various sizes. The results of all of the models can be seen in \autoref{fig:iteration1_train_accuracy}
 and \autoref{fig:iteration1_all_accuracy}.\\
@@ -77,7 +77,7 @@ There are various limitations with regards to iteration 1. This iteration does n
 input features nor does it test various sequence lengths. Furthermore, there could be another number of layers or
 layer sizes that is better suited to the problem but unfortunately many have not been tested due to time constraints.
 
-\section{Accuracy of Iteration 2}
+\section{Iteration 2 results}
 As mentioned in \autoref{ssec:iteration2layers}, various combinations of Conv1D layers and Dense layers were tested,
 each with various sizes. The results of all of the models can be seen in \autoref{fig:iteration2_train_accuracy}
 and \autoref{fig:iteration2_all_accuracy}.\\
@@ -153,7 +153,7 @@ There are various limitations with regards to iteration 2. This iteration does n
 input features nor does it test various sequence lengths. Furthermore, there could be another number of layers or
 layer sizes that is better suited to the problem but unfortunately many have not been tested due to time constraints.
 
-\section{Accuracy of Iteration 3}
+\section{Iteration 3 results}
 As mentioned in \autoref{ssec:iteration3layers}, various combinations of Conv1D layers, LSTM layers and Dense layers were tested,
 each with various sizes. The results of all of the models can be seen in \autoref{fig:iteration3_train_accuracy}
 and \autoref{fig:iteration3_all_accuracy}.\\
@@ -225,6 +225,7 @@ the validation set. The validation loss shows little overfitting as can be seen 
 56.07\% whilst the training accuracy reached 55.24\%. The validation accuracy being somewhat greater than the
 training accuracy can be explained by the dropout layers within the model that can affect the results of the training
 set but does not affect the validation set.
+
 \subsection{Evaluation of iteration 3}
 With a validation accuracy above 56.07\%, it is currently the best model when compared to the previous iterations.
 This suggests there is a significant advantage compared to randomly guessing the next trading day's direction.
@@ -232,3 +233,268 @@ Furthermore, this aligns with the studies analysed in the literature review. How
 used to answer the research questions as it does not test different sequence lengths or combinations of input features.
 Additionally, there could be different number of layers or sizes of layers that perform better but unfortunately could
 not be tested due to time constraints.
+
+\section{Iteration 4 results}
+As mentioned in \autoref{ssec:iteration4_ai_model}, a concatenated model of the best models of the previous 
+three iterations were combined in parallel. The results of this model can be seen in
+\autoref{fig:iteration4_accuracy}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/concat/concat_acc.pdf}
+    \caption[Accuracies for Iteration 4]{Figure of all training and validation accuracies in Iteration 4}
+    \label{fig:iteration4_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/concat/concat_loss.pdf}
+    \caption[Losses for Iteration 4]{Figure of all training and validation losses in Iteration 4}
+    \label{fig:iteration4_loss}
+\end{figure}
+\FloatBarrier
+
+The orange line represents the training set and the blue line represents
+the validation set. The validation loss shows little overfitting as can be seen in
+\autoref{fig:iteration4_loss} as the loss does not significantly increase. At 3 epochs,
+the validation accuracy reaches its highest value of 53.21\% whilst the training accuracy reached 52.82\%. The validation accuracy being somewhat greater than the
+training accuracy can be explained by the dropout layers within the model that can affect the results of the training
+set but does not affect the validation set.
+
+\subsection{Evaluation of iteration 4}
+With a validation accuracy above 53\%, there is only a minimal improvment above a random guess of the direction
+of the next trading day. This model was included to test between a sequential hybrid model as seen in Iteration 3
+and this parallel hybrid approach. However, this model does not offer any advantage over the CNN-LSTM sequential
+model alone; due to this, no further tests will be utilised with this model.
+
+\section{Iteration 5 results}
+This iteration primarily used a similar model to that in Iteration 3, however with varied input features
+and varied sequence lengths. There are various results that come from this model from identifying the
+best amount of historic data to identifying the most important inputs.
+
+\subsection{Accuracies of all tests}
+
+For each of the tests in Iteration 5, the charts contain 15 lines representing the different combinations
+of input features as mentioned in \autoref{ssec:iteration5_input_features}. Each line in the accuracy chart
+has a corresponding line in the loss chart with the same colour. Each line in the training charts has a 
+corresponding line in the validation charts with a different colour.\\
+\\
+The best values of the validation accuracies of each model at any epoch are shown in
+\autoref{ssec:iteration5_best_val_acc}.
+
+\subsubsection{Two days of historic data accuracies and losses}
+\textbf{Training accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_days_acc_t.pdf}
+    \caption[Training accuracies for Iteration 5 with two days of historic data]{Figure of all training accuracies with two days of historic data in Iteration 5}
+    \label{fig:iteration5_two_days_train_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_days_loss_t.pdf}
+    \caption[Training losses for Iteration 5 with two days of historic data]{Figure of all training losses with two days of historic data in Iteration 5}
+    \label{fig:iteration5_two_days_train_loss}
+\end{figure}
+\FloatBarrier
+
+\textbf{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_days_acc.pdf}
+    \caption[Validation accuracies for Iteration 5 with two days of historic data]{Figure of all validation accuracies with two days of historic data in Iteration 5}
+    \label{fig:iteration5_two_days_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_days_loss.pdf}
+    \caption[Validation losses for Iteration 5 with two days of historic data]{Figure of all validation losses with two days of historic data in Iteration 5}
+    \label{fig:iteration5_two_days_loss}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{One week of historic data accuracies and losses}
+\textbf{Training accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/week_acc_t.pdf}
+    \caption[Training accuracies for Iteration 5 with one week of historic data]{Figure of all training accuracies with one week of historic data in Iteration 5}
+    \label{fig:iteration5_week_train_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/week_loss_t.pdf}
+    \caption[Training losses for Iteration 5 with one week of historic data]{Figure of all training losses with one week of historic data in Iteration 5}
+    \label{fig:iteration5_week_train_loss}
+\end{figure}
+\FloatBarrier
+
+\textbf{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/week_acc.pdf}
+    \caption[Validation accuracies for Iteration 5 with one week of historic data]{Figure of all validation accuracies with one week of historic data in Iteration 5}
+    \label{fig:iteration5_week_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/week_loss.pdf}
+    \caption[Validation losses for Iteration 5 with one week of historic data]{Figure of all validation losses with one week of historic data in Iteration 5}
+    \label{fig:iteration5_week_loss}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Two weeks of historic data accuracies and losses}
+\textbf{Training accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_weeks_acc_t.pdf}
+    \caption[Training accuracies for Iteration 5 with two weeks of historic data]{Figure of all training accuracies with two weeks of historic data in Iteration 5}
+    \label{fig:iteration5_two_weeks_train_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_weeks_loss_t.pdf}
+    \caption[Training losses for Iteration 5 with two weeks of historic data]{Figure of all training losses with two weeks of historic data in Iteration 5}
+    \label{fig:iteration5_two_weeks_train_loss}
+\end{figure}
+\FloatBarrier
+
+\textbf{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_weeks_acc.pdf}
+    \caption[Validation accuracies for Iteration 5 with two weeks of historic data]{Figure of all validation accuracies with two weeks of historic data in Iteration 5}
+    \label{fig:iteration5_two_weeks_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_weeks_loss.pdf}
+    \caption[Validation losses for Iteration 5 with two weeks of historic data]{Figure of all validation losses with two weeks of historic data in Iteration 5}
+    \label{fig:iteration5_two_weeks_loss}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{One month of historic data accuracies and losses}
+\textbf{Training accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/month_acc_t.pdf}
+    \caption[Training accuracies for Iteration 5 with one month of historic data]{Figure of all training accuracies with one month of historic data in Iteration 5}
+    \label{fig:iteration5_month_train_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/month_loss_t.pdf}
+    \caption[Training losses for Iteration 5 with one month of historic data]{Figure of all training losses with one month of historic data in Iteration 5}
+    \label{fig:iteration5_month_train_loss}
+\end{figure}
+\FloatBarrier
+
+\textbf{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/month_acc.pdf}
+    \caption[Validation accuracies for Iteration 5 with one month of historic data]{Figure of all validation accuracies with one month of historic data in Iteration 5}
+    \label{fig:iteration5_month_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/month_loss.pdf}
+    \caption[Validation losses for Iteration 5 with one month of historic data]{Figure of all validation losses with one month of historic data in Iteration 5}
+    \label{fig:iteration5_month_loss}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Two months of historic data accuracies and losses}
+\textbf{Training accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_months_acc_t.pdf}
+    \caption[Training accuracies for Iteration 5 with two months of historic data]{Figure of all training accuracies with two months of historic data in Iteration 5}
+    \label{fig:iteration5_two_months_train_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_months_loss_t.pdf}
+    \caption[Training losses for Iteration 5 with two months of historic data]{Figure of all training losses with two months of historic data in Iteration 5}
+    \label{fig:iteration5_two_months_train_loss}
+\end{figure}
+\FloatBarrier
+
+\textbf{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_months_acc.pdf}
+    \caption[Validation accuracies for Iteration 5 with two months of historic data]{Figure of all validation accuracies with two months of historic data in Iteration 5}
+    \label{fig:iteration5_two_months_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/two_months_loss.pdf}
+    \caption[Validation losses for Iteration 5 with two months of historic data]{Figure of all validation losses with two months of historic data in Iteration 5}
+    \label{fig:iteration5_two_months_loss}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{One quarter of historic data accuracies and losses}
+\textbf{Training accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/quarter_acc_t.pdf}
+    \caption[Training accuracies for Iteration 5 with one quarter of historic data]{Figure of all training accuracies with one quarter of historic data in Iteration 5}
+    \label{fig:iteration5_quarter_train_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/quarter_loss_t.pdf}
+    \caption[Training losses for Iteration 5 with one quarter of historic data]{Figure of all training losses with one quarter of historic data in Iteration 5}
+    \label{fig:iteration5_quarter_train_loss}
+\end{figure}
+\FloatBarrier
+
+\textbf{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/quarter_acc.pdf}
+    \caption[Validation accuracies for Iteration 5 with one quarter of historic data]{Figure of all validation accuracies with one quarter of historic data in Iteration 5}
+    \label{fig:iteration5_quarter_accuracy}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/quarter_loss.pdf}
+    \caption[Validation losses for Iteration 5 with one quarter of historic data]{Figure of all validation losses with one quarter of historic data in Iteration 5}
+    \label{fig:iteration5_quarter_loss}
+\end{figure}
+\FloatBarrier
+
+\subsection{Best validation accuracies}\label{ssec:iteration5_best_val_acc}
+The table below in \autoref{fig:final_val_accuracy} shows the accuracies of each combination of input features and length of historic data.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/final/final_val_accuracy.pdf}
+    \caption[Best validation accuracies for Iteration 5]{Figure of all validation accuracies of each combination of input features and sequence length in Iteration 5}
+    \label{fig:final_val_accuracy}
+\end{figure}
+\FloatBarrier
+
+From the input features and lengths of historic data tested, the results show the stock market index price
+combined with the Effective Federal Funds Rate ,with a sequence length of 1 month (21 days) of historic 
+data, have the best accuracy with a value of 55.18\%.
+
+\subsection{Evaluation of iteration 5}
+While the 
+
+

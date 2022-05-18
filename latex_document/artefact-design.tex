@@ -7,6 +7,8 @@ The Agile software development methodology will be utilised in this project; and
 into various iterations of design, development, and testing. This will allow for a more flexible approach to
 the task and the ability to make changes as the project progresses without requiring additional time and effort
 to fully test and deploy an inaccurate or unsuitable artefact.
+There are various iterations that will be used to gradually improve to a final version that will be used to
+form answers for the research questions.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/development_methodologies.jpg}
@@ -183,7 +185,7 @@ is reported daily, the percentage change since the last day is calculated. For t
 market index, the percentage change since the last two days, last week, last month and last quarter were also
 included.
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -238,7 +240,7 @@ This results in a value known as the z-score, a measure of how many standard dev
 all values are clipped to be within the range -3 and +3, and then this range is scaled to be between -1 and +1 for optimised
 operation within the artificial intelligence models.
 
-\subsection{Training / Validation Split}
+\subsection{Training / validation split}
 The dataset includes data from November 2006 to March 2022; the dataset is split 80:20 between training data and
 validation data. This means March 2019 is the cut off period betweeen the training and validation datasets. This
 results in 2730 samples for the training data and 560 samples for the validation data after accounting for some
@@ -251,7 +253,7 @@ shuffled, the number of sequences that result in an positive trading day are cou
 a negative day. The minimum of the two are chosen to ensure there is an even split of inputs that result in a positive trading day,
 and inputs that result in a negative trading day.
 
-\section{Model Fitting}\label{sec:model_fitting}
+\section{Model fitting}\label{sec:model_fitting}
 Each of the models in this project were fit using the Adam optimiser with a learning rate of 0.001 and a decay of
 1e-6. Adam is a popular and efficient algorithm for gradient descent in deep learning models.
 The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
@@ -459,8 +461,8 @@ is an positive or negative trading day.
 \subsection{Artificial intelligence model used}\label{ssec:iteration4_ai_model}
 In the fourth iteration, a hybrid approach of the previous models were used to create a concatenated model of each
 of the three previous iterations. The layer amounts and sizes of each previous model were not modified, apart from
-the final Dense layer being removed from each model. After the three models were concatenated, an additional Dense
-layer was added to the model, and then the final Dense layer of output shape (None, 2) was returned to the model.
+the final Dense layer being removed from each model. After the three models were concatenated in parallel,
+an additional Dense layer was added to the model, and then the final Dense layer of output shape (None, 2) was returned to the model.
 
 \subsection{Diagram of model used}
 The diagram below (\autoref{fig:iteration4_model}) shows the concatenation of the previous three models (LSTM, CNN, CNN-LSTM)
@@ -476,6 +478,10 @@ layer which outputs a shape of (None, 32) which is passed to the final layer whi
 \FloatBarrier
 
 \section{Iteration 5}
+This iteration is the final iteration for this project. It utilises the best model identified across the
+previous four iterations: the CNN-LSTM sequential model from Iteration 3. Different sets of input features
+and sequence lengths are utilised to help answer the research questions.
+
 \subsection{Artificial intelligence model used}\label{ssec:iteration5_ai_model}
 In the fifth iteration, the previous four iterations were compared to identify which model had the best results.
 This was found to be the CNN-LSTM hybrid model from \autoref{ssec:iteration3_ai_model}
@@ -486,7 +492,7 @@ previous week (5 trading days), previous month (21 trading days), and previous q
 These all affect the input shape to the neural network, but layers following the input layer are unmodified from
 what can be seen in \autoref{fig:iteration3_model} of Iteration 3.
 
-\subsection{Input features}
+\subsection{Input features}\label{ssec:iteration5_input_features}
 Various combinations of input features were used in this iteration. All of the combinations of input features included the
 price percentage change vs the previous day. The combinations of input features are as follows:
 
