@@ -124,9 +124,23 @@ Another study using the hybrid approach slightly expands on this by using additi
 the opening and closing prices of the S\&P 500 index, the low and high prices of the day, and the trading volume
 \parencite{fitriyaningsih2019implementation,THAKKAR2020106684, hu_tang_zhang_wang_2018}. However, these studies have not considered any macro-economic factors. One study expands on this further by also including other indexes across the world as inputs, as well as various currency rates in addition to commodities such as oil and metals \parencite{shen2012stock}. Other studies expand on this further, for example one study with 27 input features also includes US Treasury yield rates and bond yields \parencite{comparisonregannsvm} and another looks into additional factors for a total of 60 input features including certificate of deposit rates, and term and default spreads \parencite{zhong2019predicting} - though the latter study explains that with principal component analysis, the model peaked in terms of accuracy with 31 input features.
 
+\section{Length of historical data provided to neural network model}
+
+LSTMs and models that utilise LSTMs require a sequence of data, rather than a single set. This is known as the sequence length.
+In the case of daily stock market predictions, the sequence length is usually measured in days, with there being a time step of one day.
+One paper notes that among their tests of sequence lengths of 14, 28, 50 and 56 days, 50 performed the best \parencite{noveldeepcnnbilstm};
+this paper in predicting prices.
+Another paper uses a similar sequence length of 40 days to predict prices one week and one month ahead of time \parencite{hao_gao_2020} rather than one
+day ahead of time as other models; this paper results in prediction accuracies of 66.59\% and 74.55\% for the respective time horizons.
+Shorter sequence lengths have also been utilised, for example one study employs a model with a sequence length of 14 days to achieve an
+accuracy of 56.21\%. Similarly longer sequence lengths have also been employed such as the 240 days sequence length used in an LSTM model to achieve
+accuracies between 52\% and 58\% depending on which year's data was inputted to the model \parencite{fischer_krauss_2018}. 
+
 \section{Conclusion}
 To conclude, there are differing opinions on whether markets are efficient, and therefore whether they are predictable. Some economists use the fact that experienced fund managers are rarely able to beat the market as proof that markets are efficient, and there are studies that agree with this hypothesis. However, there are also other studies that disagree presenting their findings that show there is some evidence of market inefficiencies in either the short term or long term.
 
 Regardless of markets being efficient or not, numerous artificial intelligence methods — including MLPs, SVMs, CNNs as well as hybrid approaches using CNNs and LSTMs -- have been employed to varying degrees of success. While some studies look at predicting just the direction, and others attempt to predict the price, most have claimed to be able to do so with above 50\% accuracy. From the studies researched here, it can be assumed that in general hybrid approaches involving CNNs and LSTMs outperform SVMs, which outperform MLPs.
 
-These studies use a diverse set of input features in order to build their models, with some using features only directly related to the index and some using extended datasets including inputs from macroeconomic sources in order to build models that take account external factors that may affect the index's price, though there is evidence to suggest that not all of the input features are required to build a good model to predict the price of an index.
+Various sequence lengths have been employed with similar levels of accuracies when forecasting the next day's direction from 14 to 240 days; suggesting there is perhaps little meaning to different sized sequence lengths as long as there is enough data for the model to generalise from.
+
+There is a diverse set of input features in order to build the models in each study, with some using features only directly related to the index and some using extended datasets including inputs from macroeconomic sources in order to build models that take account external factors that may affect the index's price, though there is evidence to suggest that not all of the input features are required to build a good model to predict the price of an index.
