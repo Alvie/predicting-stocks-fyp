@@ -39,6 +39,10 @@ greater.
 
 \section{Input features chosen and data collection}
 The input features chosen are an amalgamation primarily based on those found in the literature review.
+However, there are several input features that have previously not been used in such as repurchase agreements
+data, as well as sentiment data, etc. This represents a first time application of an existing research method
+to a novel case study for many of the models.
+
 From the literature review, the input features have been classified into four categories:
 \begin{itemize}
     \item Stock market index
@@ -501,7 +505,7 @@ and sequence lengths are utilised to help answer the research questions.
 
 \subsection{Artificial intelligence model used}\label{ssec:iteration5_ai_model}
 In the fifth iteration, the previous four iterations were compared to identify which model had the best results.
-This was found to be the CNN-LSTM hybrid model from \autoref{ssec:iteration3_ai_model}
+This was found to be the CNN-LSTM hybrid model from \autoref{ssec:iteration3_ai_model} with an accuracy of 56.07\%.
 
 \subsection{Sequence length used}
 Various sequence lengths were used in the testing of this model, including: previous two days,
@@ -609,3 +613,40 @@ price percentage change vs the previous day. The combinations of input features 
         \item Consumer Confidence (OECD) percentage change vs previous month
     \end{itemize}
 \end{itemize}
+
+\section{Benchmark application}
+This iteration is the final iteration for this project. It utilises the same model as specified
+in iterations 5 and 3. The main difference is regarding the set of input features which are described
+in \autoref{ssec:benchmark_input_features}.
+
+As a result, this model represents a benchmark application of the same existing research method
+(the CNN-LSTM sequential model) that is used with an existing case study.
+
+\subsection{Artificial intelligence model used}\label{ssec:benchmark_ai_model}
+In the benchmark application, the CNN-LSTM sequential model is utilised as this is the one
+chosen in Iteration 5 after it had been found to be the best model in Iteration 3.
+
+\subsection{Sequence length used}
+Similarly to the models in the artefact, various sequence lengths were used in the testing of this model,
+including: previous two days, previous week (5 trading days), previous month (21 trading days), and previous quarter
+(previous 63 trading days).
+These all affect the input shape to the neural network, but layers following the input layer are unmodified from
+what can be seen in \autoref{fig:iteration3_model} of Iteration 3.
+
+\subsection{Input features}\label{ssec:benchmark_input_features}
+Similarly to the artefact models, the benchmark dataset includes data from November 2006 to March 2022;
+the dataset is split 80:20 between training data and validation data. Furthermore, the preprocessing is
+applied in a similar manner.
+
+The following input features are used in this model:
+
+\begin{itemize}
+    \item SPY daily open price percentage change vs previous day
+    \item SPY daily high price percentage change vs previous day
+    \item SPY daily low price percentage change vs previous day
+    \item SPY daily closing price percentage change vs previous day
+    \item SPY daily volume percentage change vs previous day
+\end{itemize}
+
+The daily volume and closing price have been utilised in previous models for the artefact,
+but the open, high and low prices are unique to the benchmark application.
