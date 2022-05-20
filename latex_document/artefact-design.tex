@@ -111,7 +111,7 @@ sources for used in the data collection process are also present within this lis
         \textbf{Source:} Federal Reserve Economic Data - EFFR:\\
         https://fred.stlouisfed.org/series/EFFR
         \item Repurchase / Reverse Repurchase Agreements\\
-        \textbf{Reasoning:} A change in utilisation of repurchase agreements may indicate if banks expect
+        \textbf{Reasoning:} A change in utilisation or rates of repurchase agreements may indicate if banks expect
         a greater return elsewhere and how banks are allocating money. This may have an impact on the
         return of the stock market index\\
         \textbf{Source:} New York Fed - Repo:\\
@@ -255,7 +255,7 @@ In order to ensure the artificial intelligence models do not have any biases ass
 and validation datasets will be shuffled to ensure the model is able to generalise rather than learn. Furthermore, once
 shuffled, the number of sequences that result in a positive trading day are counted as well as the number of sequences that result in
 a negative day. The minimum of the two are chosen to ensure there is an even split of inputs that result in a positive trading day,
-and inputs that result in a negative trading day. Some data balancing code and concepts were adapted from
+and inputs that result in a negative trading day. Some data balancing code and concepts were adapted with permission from
 an online tutorial series of creating neural networks \parencite{kinsley_2018}.
 
 \section{Model fitting}\label{sec:model_fitting}

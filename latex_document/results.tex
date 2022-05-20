@@ -693,10 +693,14 @@ set but does not affect the validation set.
 
 
 \subsection{Evaluation of benchmark model}
+The benchmark model utilises an existing case study as noted in \autoref{ssec:benchmark_input_features}
 With a validation accuracy of 54.55\%, there is an improvement above a random guess of the direction
 of the next trading day. This model was included to compare the results of the models of the artefact to understand
 how well it performs to existing models.  This result suggests that the models of all five iterations of the artefact
 outperform the existing case study as described in \autoref{ssec:benchmark_input_features}.
+
+The LSTM model in Iteration 1, CNN-LSTM sequential models in Iteration 3 and 5 outperform this benchmark model
+with validation accuracies of 55.54\%, 56.07\% and 57.50\% respectively.
 
 
 \section{Artefact evaluation}
