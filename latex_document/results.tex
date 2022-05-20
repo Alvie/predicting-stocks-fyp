@@ -693,8 +693,9 @@ evolve over time; for example settlement periods adjusting from T+3 days to T+2 
     \item What are potential reasons for this length of time being the most useful?
 \end{itemize}
 
-The results from the artefact generally show that one month of historical data can provide the best models; though for the
-input features tested, two days has the best results when averaged. Generally, a short sequence length of historical data provides
+The results from the artefact generally show that one month of historical data can provide the best models as seen in \autoref{fig:val_accuracy_comparison};
+though for the input features tested, two days has the best results when averaged as the results show in \autoref{fig:final_val_accuracy}.
+Generally, a short sequence length of historical data provides
 the best result for predicting the daily direction of the stock market index with few input features affecting the accuracy of the
 model. However, given an optimal set of input features, the model may be able to recognise patterns in longer sequence lengths.
 
@@ -713,11 +714,16 @@ disregard any patterns that provide less value.
     \item What are the potential reasons these features do / do not impact the model?
 \end{itemize}
 
-The artefact suggests that information regarding the treasury yields have the most impact to the neural network models across all sequence lengths
-apart from two days. This is likely due to the fact there generally aren't significant changes to treasury yields in a two day period; but they can
-grow to be more significant over a long time horizon. The increased accuracy is likely due to the changes in yields affecting institutional decisions
-to reallocate funds between the stock market and treasury products depending on the risk management as treasury products are generally less risky but
-offer lesser returns than the stock market.
+On average, including treasury yields data to the model improved accuracies by 3.17\% compared to price alone as seen in
+\autoref{fig:val_accuracy_comparison}.
+The artefact suggests that information regarding the treasury yields have the most impact to the neural network models across all sequence
+lengths apart from two days. 
+This is likely due to the fact there generally aren't significant changes to treasury yields in a two day period; but they can
+grow to be more significant over a long time horizon. The increased accuracy is likely due to the changes in yields may affect institutional decisions
+depending on the risk management. Firms may reallocate funds between the stock market and treasury products; treasury products are generally less risky but
+offer lesser returns than the stock market. Repurchase agreements (repos) show trends similar to the treasury yields. There generally aren't significant
+changes in 2 days, but there may be patterns over longer periods of times. This may be due to the fact changes to repo markets
+can affect liquidity in other markets.
 
 There are several factors that do not impact the model greatly, such as reverse repurchase agreements (reverse repos).
 This is likely due to the fact reverse repos were generally underutilised, especially in the training period and as a result did 
@@ -725,3 +731,90 @@ not affect the model significantly. Exchange volume, gold, currency exchange rat
 generally did not affect the accuracy significantly. This is likely due to those factors remaining relatively stable most of the time. 
 
 \subsection{Requirements evaluation}
+\subsubsection{Functional requirements}
+\textbf{Necessary functional requirements}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|p{100mm}|c|}
+        \hline
+        Requirement & Met? \\
+        \hline\hline
+        Predict daily price direction with 60\%+ accuracy & No \\
+        Identify which input features are most important & Yes \\
+        Identify what sequence length (number of days of history of each input feature) is optimal & Yes \\
+        Present charts of accuracies and losses of each model & Yes \\
+        \hline
+    \end{tabular}
+    \caption{Table showing whether necessary functional requirements were met}
+    \label{tab:necessary_functional_requirements}
+\end{table}
+\FloatBarrier
+
+Unfortunately, the models were not able to provide an accuracy greater than 60\%, but this did not
+affect the models' ability to identify optimal features in stock market forecasting. Charts were
+also able to produced using the Tensorboard callback.
+
+\textbf{Optional functional requirements}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|p{100mm}|c|}
+        \hline
+        Requirement & Met? \\
+        \hline\hline
+        Predict daily price return with a mean absolute deviation of 2.5\% or lower & No \\
+        \hline
+    \end{tabular}
+    \caption{Table showing whether optional functional requirements were met}
+    \label{tab:optional_functional_requirements}
+\end{table}
+\FloatBarrier
+
+This requirement was not met due to time constraints and decisions to focus on other models
+predicting direction only. This decision was made due to the belief that understanding
+the direction is more important than specific prices to generate a positive return on investment.
+
+\subsubsection{Non-functional requirements}
+\textbf{Necessary non-functional requirements}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|p{100mm}|c|}
+        \hline
+        Requirement & Met? \\
+        \hline\hline
+        The artefact should take less than one minute to run per model chosen (on modern Nvidia GPUs) & Yes* \\
+        \hline
+    \end{tabular}
+    \caption{Table showing whether necessary non-functional requirements were met}
+    \label{tab:necessary_non_functional_requirements}
+\end{table}
+
+*All models apart from concatenated parallel hybrid models were able to train the models in under a minute.
+The models in Iteration 4 were not chosen to be used in the final iteration due to poor accuracies.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/time_taken.png}
+    \caption[Time taken to train models]{Figure comparing the time taken to train models in Iteration 5 compared to Iteration 4}
+    \label{fig:time_take_for_models}
+\end{figure}
+\FloatBarrier
+
+\textbf{Optional non-functional requirements}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|p{100mm}|c|}
+        \hline
+        Requirement & Met? \\
+        \hline\hline
+        Front-end application that allows users to input features and sequence lengths to train different models & No \\
+        User-facing documentation for artefact & No \\
+        \hline
+    \end{tabular}
+    \caption{Table showing whether optional non-functional requirements were met}
+    \label{tab:optional_non_functional_requirements}
+\end{table}
+
+Due to time constraints these requirements were not completed. Due to this being primarily a research project
+rather than an engineering project, it was deemed unnecessary to have a front-end application. It is relatively
+easy to adjust different models with the python code provided. The code also contains comments throughout and uses
+relevant variable names to ensure readability and understanding. Furthermore, Tensorboard provides a good front-end
+for visualising performance metrics of the models.

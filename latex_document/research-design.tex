@@ -63,7 +63,7 @@ features on a single research model has not been well identified. This will be a
 the supporting artefact to look into. The academic novelty exists within the fact that
 there is a unique set of input features on the CNN+LSTM model; and also finding the optimal sequence and
 combination of input features. Ideally, this will allow the supporting artefact to have greater than
-65\% accuracy in predicting the daily price direction.
+60\% accuracy in predicting the daily price direction.
 
 \section{Requirements of the artefact}
 \subsection{Functional requirements}
@@ -79,10 +79,12 @@ reasons: it does not significantly help market participants compared to knowing 
 it may be more cumbersome / time-consuming for a relatively low significant output for end users.
 \subsubsection{Necessary requirements}
 \begin{itemize}
-    \item Predict daily price direction with 65\%+ accuracy
+    \item Predict daily price direction with 60\%+ accuracy
     \item Identify which input features are most important
     \item Identify what sequence length (number of days of history of each input feature) is optimal
+    \item Present charts of accuracies and losses of each model
 \end{itemize}
+
 \subsubsection{Optional requirements}
 Based on the literature review, a study suggested it had been able to accurately predict prices with a mean
 absolute deviation of 2.516\% on the testing data set when compared to the true price.
@@ -90,13 +92,17 @@ absolute deviation of 2.516\% on the testing data set when compared to the true 
     \item Predict daily price return with a mean absolute deviation of 2.5\% or lower
 \end{itemize}
 \subsection{Non-functional requirements}
-The performance artefact is not time critical due to there being a large time period 17 hours and 30 minutes
+The results from the artefact are not time critical due to there being a large time period 17 hours and 30 minutes
 between market close (4:00 PM ET) and market open (9:30 AM ET) of stock exchanges in the USA; however this
 may not be ideal for users thus the following non-functional requirements have been identified.
+
+\subsubsection{Necessary requirements}
 \begin{itemize}
-    \item The artefact should take less than 5 minutes to run per model chosen (on modern GPUs)
-    \item The artefact should allow the user to choose which input features to include
-    with less than 1 click per feature + 1 for entering selection window
-    \item The artefact should allow the user to choose the sequence lengths to include
-    with less than 1 click per sequence length + 1 for entering selection window
+    \item The artefact should take less than one minute to run per model chosen (on modern Nvidia GPUs)
+\end{itemize}
+
+\subsubsection{Optional requirements}
+\begin{itemize}
+    \item Front-end application that allows users to input features and sequence lengths to train different models
+    \item User-facing documentation for artefact
 \end{itemize}
