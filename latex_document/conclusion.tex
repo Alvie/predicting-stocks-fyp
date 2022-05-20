@@ -28,3 +28,8 @@ helpful specifically to the options market where specific prices are important t
 Additionally, as this project identifies some input features are more or less important depending on
 the sequence length of historical data; an approach to exploit the advantages of different
 sequence lengths could prove to produce a model with greater accuracy.
+
+Moreover, long periods of time may cause patterns recognised by the neural network in the training data
+set to be outdated in the validation dataset. There should be further work done in identifying the maximum
+amount of history to use in order to avoid networks recognising outdated patterns, whilst ensuring the
+network has enough history to learn relevant patterns.

@@ -626,31 +626,70 @@ The benchmark application uses an existing case study of input features and appl
 model as described in Iteration 3.
 
 \subsection{Accuracies of all tests}
+In the charts below, each line represents a different sequence length to the benchmark case study as described in \autoref{ssec:benchmark_input_features}.
+For the training and validation accuracy charts, each line has a corresponding line in the loss charts with the same colour.
 
+There are 6 lines in each chart as there were 6 different sequence lengths tested.
+\subsubsection{Training accuracies and losses}
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_acc.pdf}
-    \caption[Accuracies for benchmark model]{Figure of training and validation accuracies in benchmark model}
-    \label{fig:benchmark_accuracy}
+    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_all_acc_t.pdf}
+    \caption[Training accuracies for Benchmark Model]{Figure of all training accuracies of the different sequence lengths in the Benchmark Model}
+    \label{fig:benchmark_train_accuracy}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_loss.pdf}
-    \caption[Losses for benchmark model]{Figure of training and validation losses in benchmark model}
-    \label{fig:benchmark_loss}
+    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_all_loss_t.pdf}
+    \caption[Training losses for benchmark model]{Figure of all training losses of the different sequence lengths in the benchmark model}
+    \label{fig:benchmark_train_loss}
 \end{figure}
 \FloatBarrier
 
-The orange line represents the training set and the blue line represents
-the validation set. The validation loss shows little overfitting as can be seen in
-\autoref{fig:iteration4_loss} as the loss does not significantly increase. At 10 epochs,
-the validation accuracy reaches its highest value of 54.55\% whilst the training accuracy reached 50.18\%. The validation accuracy being somewhat greater than the
-training accuracy can be explained by the dropout layers within the model that can affect the results of the training
-set but does not affect the validation set. 
+\subsubsection{Validation accuracies and losses}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_all_acc.pdf}
+    \caption[Validation accuracies for benchmark model]{Figure of all validation accuracies of the different sequence lengths in the benchmark model}
+    \label{fig:benchmark_all_accuracy}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_all_loss.pdf}
+    \caption[Validation losses for benchmark model]{Figure of all validation losses of the different sequence lengths in the benchmark model}
+    \label{fig:benchmark_all_loss}
+\end{figure}
+\FloatBarrier
+
+
 
 \subsection{Accuracies of the best result}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_quarter_acc.pdf}
+    \caption[Best accuracy for the benchmark model]{Figure of the best accuracy of the different sequence lengths in the benchmark model}
+    \label{fig:benchmark_best_accuracy}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results/benchmark/benchmark_quarter_loss.pdf}
+    \caption[Best loss for the benchmark model]{Figure of the best loss of the different sequence lengths in the benchmark model}
+    \label{fig:benchmark_best_loss}
+\end{figure}
+\FloatBarrier
+
+The blue line represents the training set and the pink line represents
+the validation set. The validation loss shows little overfitting as can be seen in
+\autoref{fig:benchmark_best_loss} as the loss does not significantly increase. At 10 epochs,
+the validation accuracy reaches its highest value of 54.55\% whilst the training accuracy reached 50.18\%. The validation accuracy being somewhat greater than the
+training accuracy can be explained by the dropout layers within the model that can affect the results of the training
+set but does not affect the validation set.
 
 
 \subsection{Evaluation of benchmark model}
@@ -666,15 +705,8 @@ it is the first time application of a novel case study to an existing research m
 the results from the models shown have been able to support in answering the research questions.
 
 \subsection{Research questions evaluation}
-\subsubsection{Predicting a stock market index's direction}
-\textbf{Question} Is it possible to accurately predict a stock market index's (S\&P 500) direction for
-the following day with an artificial intelligence model?\\
-\textbf{Sub Questions}
-\begin{itemize}
-    \item If so, what is the accuracy of the model?
-    \item If not, what limitations affected the model to cause it to be inaccurate?
-    \item Can the findings of this question be used to prove/disprove the efficient market hypothesis?
-\end{itemize}
+\hyperref[predicting_direction_question]{\textbf{Question 1: Predicting a stock market index's direction}}
+
 
 The results from the artefact suggest that it is possible to predict the stock market index's direction
 with a reasonable degree of accuracy. The best model of Iteration 5 had a validation accuracy of 57.5\%
@@ -685,13 +717,7 @@ involved that may affect the accuracy. The model uses data from November 2006 to
 a relatively large time horizon and as a result, some ideas learned by the model may be outdated as the markets
 evolve over time; for example settlement periods adjusting from T+3 days to T+2 days.
 
-\subsubsection{Optimal amount of historical data as input}
-\textbf{Question} How do different lengths of time as history for the input in the training data affect the model?\\
-\textbf{Sub Questions}
-\begin{itemize}
-    \item What is the ideal length of time to be used in the training data?
-    \item What are potential reasons for this length of time being the most useful?
-\end{itemize}
+\hyperref[optimal_historical_question]{\textbf{Question 2: Optimal amount of historical data as input}}
 
 The results from the artefact generally show that one month of historical data can provide the best models as seen in \autoref{fig:val_accuracy_comparison};
 though for the input features tested, two days has the best results when averaged as the results show in \autoref{fig:final_val_accuracy}.
@@ -705,14 +731,8 @@ the fact many economical factors are reported by institutions / governments on a
 may be the best length for the LSTMs in the neural network model to identify and remember patterns that are beneficial to the model and
 disregard any patterns that provide less value.
 
-\subsubsection{Most important input features}
-\textbf{Question} What are the most important input features that affect the model?\\
-\textbf{Sub Questions}
-\begin{itemize}
-    \item How much do each of these input features contribute to the model?
-    \item Do any of the input features identified have negligible impact to the model?
-    \item What are the potential reasons these features do / do not impact the model?
-\end{itemize}
+\hyperref[most_important_features_question]{\textbf{Question 3: Most important input features}}
+
 The results are significantly more nuanced and cannot be placed into neat categories as described in \autoref{ssec:input_feature_chosen}.
 On average, including treasury yields data to the model improved accuracies by 3.17\% compared to price alone as seen in
 \autoref{fig:val_accuracy_comparison}.
