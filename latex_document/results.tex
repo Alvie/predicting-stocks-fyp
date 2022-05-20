@@ -713,7 +713,7 @@ disregard any patterns that provide less value.
     \item Do any of the input features identified have negligible impact to the model?
     \item What are the potential reasons these features do / do not impact the model?
 \end{itemize}
-
+The results are significantly more nuanced and cannot be placed into neat categories as described in \autoref{ssec:input_feature_chosen}.
 On average, including treasury yields data to the model improved accuracies by 3.17\% compared to price alone as seen in
 \autoref{fig:val_accuracy_comparison}.
 The artefact suggests that information regarding the treasury yields have the most impact to the neural network models across all sequence
@@ -728,7 +728,7 @@ can affect liquidity in other markets.
 There are several factors that do not impact the model greatly, such as reverse repurchase agreements (reverse repos).
 This is likely due to the fact reverse repos were generally underutilised, especially in the training period and as a result did 
 not affect the model significantly. Exchange volume, gold, currency exchange rates, inflation rates, and employment rates
-generally did not affect the accuracy significantly. This is likely due to those factors remaining relatively stable most of the time. 
+generally did not affect the accuracy significantly. This is likely due to those factors remaining relatively stable most of the time.
 
 \subsection{Requirements evaluation}
 \subsubsection{Functional requirements}
