@@ -660,5 +660,68 @@ how well it performs to existing models.  This result suggests that the models o
 outperform the existing case study as described in \autoref{ssec:benchmark_input_features}.
 
 
-\section{Artefact Evaluation}
+\section{Artefact evaluation}
+The artefact in this project is shown to be novel based on the unique sets of input features as
+it is the first time application of a novel case study to an existing research method. Generally,
+the results from the models shown have been able to support in answering the research questions.
 
+\subsection{Research questions evaluation}
+\subsubsection{Predicting a stock market index's direction}
+\textbf{Question} Is it possible to accurately predict a stock market index's (S\&P 500) direction for
+the following day with an artificial intelligence model?\\
+\textbf{Sub Questions}
+\begin{itemize}
+    \item If so, what is the accuracy of the model?
+    \item If not, what limitations affected the model to cause it to be inaccurate?
+    \item Can the findings of this question be used to prove/disprove the efficient market hypothesis?
+\end{itemize}
+
+The results from the artefact suggest that it is possible to predict the stock market index's direction
+with a reasonable degree of accuracy. The best model of Iteration 5 had a validation accuracy of 57.5\%
+which suggests there is often an ability to predict the daily direction of a stock market index. This
+may also suggest there are often inefficiencies in the market and may offer some evidence to disprove
+the efficient market hypothesis. While this model has been quite accurate, there are some limitations
+involved that may affect the accuracy. The model uses data from November 2006 to March 2022; this involves
+a relatively large time horizon and as a result, some ideas learned by the model may be outdated as the markets
+evolve over time; for example settlement periods adjusting from T+3 days to T+2 days.
+
+\subsubsection{Optimal amount of historical data as input}
+\textbf{Question} How do different lengths of time as history for the input in the training data affect the model?\\
+\textbf{Sub Questions}
+\begin{itemize}
+    \item What is the ideal length of time to be used in the training data?
+    \item What are potential reasons for this length of time being the most useful?
+\end{itemize}
+
+The results from the artefact generally show that one month of historical data can provide the best models; though for the
+input features tested, two days has the best results when averaged. Generally, a short sequence length of historical data provides
+the best result for predicting the daily direction of the stock market index with few input features affecting the accuracy of the
+model. However, given an optimal set of input features, the model may be able to recognise patterns in longer sequence lengths.
+
+The two day sequence length may be more accurate due to the fact markets are always adjusting and reacting to changes; and as a result
+there may be short term inefficiencies that can be exploited. However, the one month sequence length accuracies may be explained due to
+the fact many economical factors are reported by institutions / governments on a monthly basis. Furthermore, the one month sequence length
+may be the best length for the LSTMs in the neural network model to identify and remember patterns that are beneficial to the model and
+disregard any patterns that provide less value.
+
+\subsubsection{Most important input features}
+\textbf{Question} What are the most important input features that affect the model?\\
+\textbf{Sub Questions}
+\begin{itemize}
+    \item How much do each of these input features contribute to the model?
+    \item Do any of the input features identified have negligible impact to the model?
+    \item What are the potential reasons these features do / do not impact the model?
+\end{itemize}
+
+The artefact suggests that information regarding the treasury yields have the most impact to the neural network models across all sequence lengths
+apart from two days. This is likely due to the fact there generally aren't significant changes to treasury yields in a two day period; but they can
+grow to be more significant over a long time horizon. The increased accuracy is likely due to the changes in yields affecting institutional decisions
+to reallocate funds between the stock market and treasury products depending on the risk management as treasury products are generally less risky but
+offer lesser returns than the stock market.
+
+There are several factors that do not impact the model greatly, such as reverse repurchase agreements (reverse repos).
+This is likely due to the fact reverse repos were generally underutilised, especially in the training period and as a result did 
+not affect the model significantly. Exchange volume, gold, currency exchange rates, inflation rates, and employment rates
+generally did not affect the accuracy significantly. This is likely due to those factors remaining relatively stable most of the time. 
+
+\subsection{Requirements evaluation}
