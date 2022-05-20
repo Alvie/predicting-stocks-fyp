@@ -593,7 +593,7 @@ On average, the model utilising price and treasury yields data, have the highest
 shows that treasury yields data can be an important factor to stock market returns.
 
 In order to better visualise how different features affect the model, each combination of input features was compared against the `price only' dataset for each sequence length.
-The results of these comparisions can be shown in the table below in \autoref{fig:val_accuracy_comparison}.
+The results of these comparisons can be shown in the table below in \autoref{fig:val_accuracy_comparison}.
 
 \begin{figure}[ht]
     \centering
@@ -731,7 +731,7 @@ model. However, given an optimal set of input features, the model may be able to
 
 The two day sequence length may be more accurate due to the fact markets are always adjusting and reacting to changes; and as a result
 there may be short term inefficiencies that can be exploited. However, the one month sequence length accuracies may be explained due to
-the fact many economical factors are reported by institutions / governments on a monthly basis. Furthermore, the one month sequence length
+the fact many economic factors are reported by institutions / governments on a monthly basis. Furthermore, the one month sequence length
 may be the best length for the LSTMs in the neural network model to identify and remember patterns that are beneficial to the model and
 disregard any patterns that provide less value.
 
@@ -742,7 +742,7 @@ On average, including treasury yields data to the model improved accuracies by 3
 \autoref{fig:val_accuracy_comparison}.
 The artefact suggests that information regarding the treasury yields have the most impact to the neural network models across all sequence
 lengths apart from two days. 
-This is likely due to the fact there generally aren't significant changes to treasury yields in a two day period; but they can
+This is likely due to the fact there generally aren't significant changes to treasury yields in a two-day period; but they can
 grow to be more significant over a long time horizon. The increased accuracy is likely due to the changes in yields may affect institutional decisions
 depending on the risk management. Firms may reallocate funds between the stock market and treasury products; treasury products are generally less risky but
 offer lesser returns than the stock market. Repurchase agreements (repos) show trends similar to the treasury yields. There generally aren't significant
@@ -764,7 +764,7 @@ generally did not affect the accuracy significantly. This is likely due to those
         Requirement & Met? \\
         \hline\hline
         Predict daily price direction with 60\%+ accuracy & No \\
-        Identify which input features are most important & Yes \\
+        Identify which input features are the most important & Yes \\
         Identify what sequence length (number of days of history of each input feature) is optimal & Yes \\
         Present charts of accuracies and losses of each model & Yes \\
         \hline

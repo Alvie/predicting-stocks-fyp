@@ -20,7 +20,7 @@ form answers for the research questions.
 \subsection{Software languages and libraries}
 \subsubsection{Programming Language}
 Python has been chosen to be used in this project as it is ubiquitous for artificial intelligence related
-tasks. There are many resources readily available for Python with regards to its usage on artificial
+tasks. There are many resources readily available for Python regarding its usage on artificial
 intelligence models and neural networks. There are various Python libraries for machine learning applications
 such as Tensorflow, an `end-to-end open source machine learning platform' created by Google as well as
 PyTorch, ` open source machine learning framework' created by Facebook's AI Research Lab.
@@ -142,7 +142,7 @@ sources for used in the data collection process are also present within this lis
         \item Put-to-Call Ratio\\
         \textbf{Reasoning:} It is believed that the market participants may use the options market
         to speculate on future returns of the stock market. The put to call ratio indicates the sentiment
-        of the market participants and may have an affect on the return of the stock market index.\\
+        of the market participants and may have an effect on the return of the stock market index.\\
         \textbf{Source:} AlphaAlerts: Historical Equity Put/Call Ratio\\
         https://www.alphalerts.com/live-historical-equity-pcr/
         \item Employment Rate\\
@@ -165,7 +165,7 @@ sources for used in the data collection process are also present within this lis
         https://fred.stlouisfed.org/series/UMCSENT
         \item Consumer Confidence\\
         \textbf{Reasoning:} It is believed that a change in consumer confidence towards the economy
-        can cause market participantsto change their portfolio allocations and thus affect the return
+        can cause market participants to change their portfolio allocations and thus affect the return
         of the stock market\\
         \textbf{Source:} Federal Reserve Economic Data - OECD Indicator for the US:\\
         https://fred.stlouisfed.org/series/CSCICP03USM665S
@@ -228,7 +228,7 @@ included.
 \FloatBarrier
 
 Following this, the inputs are assumed to be normally distributed, and are scaled using the scale function of
-scikit-learn's preprocessing library. Based on values of that input feature, they are scaled with the following
+scikit-learn's preprocessing library \parencite{scikit-learn}. Based on values of that input feature, they are scaled with the following
 equation (\autoref{eq:sklearn-scale}):
 
 \begin{equation}
@@ -236,7 +236,7 @@ equation (\autoref{eq:sklearn-scale}):
     \label{eq:sklearn-scale}
 \end{equation}
 
-where x is the sampled value, u is the mean of all of the samples, and s is the standard deviation of the samples.
+where x is the sampled value, u is the mean of all the samples, and s is the standard deviation of the samples.
 
 This results in a value known as the z-score, a measure of how many standard deviations a value is from the mean value.
 99.7\% of z-score should be between -3 and +3, but there may be outliers that exceed these values. In order to account for this,
@@ -245,7 +245,7 @@ operation within the artificial intelligence models.
 
 \subsection{Training / validation split}
 The dataset includes data from November 2006 to March 2022; the dataset is split 80:20 between training data and
-validation data. This means March 2019 is the cut off period betweeen the training and validation datasets. This
+validation data. This means March 2019 is the cut-off period between the training and validation datasets. This
 results in 2730 samples for the training data and 560 samples for the validation data after accounting for some
 values that are removed due to them having N/A values. There are no overlaps between the training data and the
 validation data; all validation data samples are from a date after the last date of the training data samples.
@@ -284,7 +284,7 @@ early_stopping = EarlyStopping(monitor='val_accuracy',
 In order to visualise the accuracies and losses, as well as time taken for each model, the Tensorboard
 call back was used. This provided an easy way to filter through data and understand which models performed
 well, which models were overfitting. Moreover, it aided in identifying consistently well suited parameters
-to create better models in the future. All of the accuracy and loss charts were created in Tensorboard.
+to create better models in the future. All the accuracy and loss charts were created in Tensorboard.
 
 \begin{minted}{python}
 tensorboard = TensorBoard(
@@ -304,7 +304,7 @@ A sequence length of 21 days (approximately 1 month) was used for each of the in
 This is a figure that has not in this iteration been tested to be the optimal sequence length, but with a short
 test of various sequence lengths, it has been found to be sufficient to produce values over 50\% accuracy.
 \subsection{Input features}
-The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
+The input features for this model included all the input features mentioned in \autoref{tab:artefact_data_normalisation}.
 
 \subsection{Layers and layer sizes} \label{ssec:iteration1layers}
 Various amounts of LSTM layers and Dense layers, as well as layer sizes for each were tested. The accuracy of each model varied
@@ -345,7 +345,7 @@ Dropouts and Batch Normalisation layers are added to aid with regularisation and
 The next layer is a Dense layer, with an input shape of (None, 64) and an output of the shape (None, 32). An additional
 dropout layer is applied here before transitioning to the final Dense layer that has an output shape of (None, 2)
 which represents the fact there are two potential outputs for the inputs: whether the following day
-is an positive or negative trading day.
+is a positive or negative trading day.
 
 \begin{figure}[ht]
     \centering
@@ -375,7 +375,7 @@ Various amounts of Conv1D layers and Dense layers, as well as layer sizes for ea
 significantly. For each Conv1D layer, there was also a MaxPooling1D layer following it; this created a downsampled
 feature map which aids in optimising the model's efficiency.
 
-Following the Conv1D layers, there was also a Flatten layer applied to ensure the the following Dense layers
+Following the Conv1D layers, there was also a Flatten layer applied to ensure the following Dense layers
 were able to accept the shape of the output of the Convolutional layers.
 
 The following models were created and compared with the following variables:
@@ -406,7 +406,7 @@ but represents that there are 32 neurons in the next layer. This output is then 
 which downsamples it to create a feature map. A Flatten layer is applied to mutate the shape from (None, 1, 32) to
 (None, 32) before transitioning to the final Dense layer that has an output shape of (None, 2)
 which represents the fact there are two potential outputs for the inputs: whether the following day
-is an positive or negative trading day.
+is a positive or negative trading day.
 
 \begin{figure}[ht]
     \centering
@@ -432,7 +432,7 @@ This is a figure that has not in this iteration been tested to be the optimal se
 test of various sequence lengths, it has been found to be sufficient to produce values over 50\% accuracy.
 
 \subsection{Input features}
-The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
+The input features for this model included all the input features mentioned in \autoref{tab:artefact_data_normalisation}.
 
 \subsection{Layers and layer sizes} \label{ssec:iteration3layers}
 Various amounts of Conv1D layers, LSTM layers and Dense layers, as well as layer sizes for each were tested. The accuracy of each model varied
@@ -479,7 +479,7 @@ output shape of (None, 16). Dropouts and Batch Normalisation layers are added to
 Following the LSTM layers, there are Dense layers, the first of which takes the input of shape (None, 16) from the
 LSTM layers and outputs a shape of (None, 64). Another Dropout layer is applied before transitioning to the final Dense layer that has an output shape of (None, 2)
 which represents the fact there are two potential outputs for the inputs: whether the following day
-is an positive or negative trading day.
+is a positive or negative trading day.
 
 \begin{figure}[ht]
     \centering
@@ -525,7 +525,7 @@ These all affect the input shape to the neural network, but layers following the
 what can be seen in \autoref{fig:iteration3_model} of Iteration 3.
 
 \subsection{Input features}\label{ssec:iteration5_input_features}
-Various combinations of input features were used in this iteration. All of the combinations of input features included the
+Various combinations of input features were used in this iteration. All the combinations of input features included the
 price percentage change vs the previous day. The combinations of input features are as follows:
 
 \begin{itemize}
