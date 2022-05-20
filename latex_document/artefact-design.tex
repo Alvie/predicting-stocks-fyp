@@ -244,7 +244,8 @@ operation within the artificial intelligence models.
 The dataset includes data from November 2006 to March 2022; the dataset is split 80:20 between training data and
 validation data. This means March 2019 is the cut off period betweeen the training and validation datasets. This
 results in 2730 samples for the training data and 560 samples for the validation data after accounting for some
-values that are removed due to them having N/A values.
+values that are removed due to them having N/A values. There are no overlaps between the training data and the
+validation data; all validation data samples are from a date after the last date of the training data samples.
 
 \subsection{Data balancing}
 In order to ensure the artificial intelligence models do not have any biases associated with them, each of the training
@@ -259,6 +260,21 @@ Each of the models in this project were fit using the Adam optimiser with a lear
 The ``Sparse Categorical Crossentropy'' loss function was utilised in the fitting of the model due to there being multiple
 label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
 probability.
+
+\section{Training optimisations}
+In order to improve efficiency in training neural networks the EarlyStopping callback was used in the
+Tensorflow training process. This allowed the model to be stopped further training if there was not
+found to be any improvement with specific factors. In the models in this project, a baseline of 0.5
+was set for validation accuracy; and a `patience' of 12 was set meaning that if there were no
+improvements from the previous best validation accuracy for 12 consecutive epochs, that model will
+stop early and not train further. This may present itself in accuracy and loss charts with some lines
+not carrying on for as many epochs as others.
+
+\begin{minted}{python}
+early_stopping = EarlyStopping(monitor='val_accuracy', 
+                                baseline=0.5,
+                                patience=12)
+\end{minted}
 
 \section{Iteration 1}
 \subsection{Artificial intelligence model used}\label{ssec:iteration1_ai_model}
@@ -337,7 +353,7 @@ Contrary to the LSTM model, the CNN model does not use a sequence of historic da
 data as the input to the model.
 
 \subsection{Input features}
-The input features for this model included all of the input features mentioned in \autoref{tab:artefact_data_normalisation}.
+The input features for this model included all the input features mentioned in \autoref{tab:artefact_data_normalisation}.
 
 \subsection{Layers and layer sizes} \label{ssec:iteration2layers}
 Various amounts of Conv1D layers and Dense layers, as well as layer sizes for each were tested. The accuracy of each model varied
@@ -387,7 +403,8 @@ is an positive or negative trading day.
 
 \section{Iteration 3}
 \subsection{Artificial intelligence model used}\label{ssec:iteration3_ai_model}
-In the third iteration, a hybrid approach of the previous models were used to create a CNN-LSTM model.
+In the third iteration, a hybrid approach of the previous models were used to create a CNN-LSTM model with the layers applied sequentially.
+In this case Convolutional (specifically, Conv1D) layers were applied first and then LSTM layers in the sequential model.
 This model consists of Conv1D layers, LSTM layers and Dense layers with the final Dense layer having an output of 2, representing one output for
 a negative day (0) and another for a positive day (1), and utilised the `softmax' activation function to predict the
 probabilities of each output.
@@ -459,8 +476,8 @@ is an positive or negative trading day.
 
 \section{Iteration 4}
 \subsection{Artificial intelligence model used}\label{ssec:iteration4_ai_model}
-In the fourth iteration, a hybrid approach of the previous models were used to create a concatenated model of each
-of the three previous iterations. The layer amounts and sizes of each previous model were not modified, apart from
+In the fourth iteration, a hybrid approach of the previous models was used to create a concatenated model of each
+of the three previous iterations in parallel. The layer amounts and sizes of each previous model were not modified, apart from
 the final Dense layer being removed from each model. After the three models were concatenated in parallel,
 an additional Dense layer was added to the model, and then the final Dense layer of output shape (None, 2) was returned to the model.
 
@@ -501,20 +518,32 @@ price percentage change vs the previous day. The combinations of input features 
     \begin{itemize}
         \item SPY price percentage change vs previous day
     \end{itemize}
-    \item Price extended set + Volume + Volatility
+    \item Price extended set
     \begin{itemize}
         \item SPY price percentage change vs previous day
         \item SPY price percentage change vs previous 2 days
         \item SPY price percentage change vs previous week
         \item SPY price percentage change vs previous month
         \item SPY price percentage change vs previous quarter
+    \end{itemize}
+    \item Price + Volume
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
         \item SPY volume percentage change vs previous day
+    \end{itemize}
+    \item Price + Volatility
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
         \item VIX (Volatility Index) percentage change vs previous day
     \end{itemize}
-    \item Price + M1 Money Supply + GDP
+    \item Price + M1 Money Supply
     \begin{itemize}
         \item SPY price percentage change vs previous day
         \item M1 Money Supply percentage change vs previous week
+    \end{itemize}
+    \item Price + GDP
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
         \item GDP percentage change vs previous quarter
     \end{itemize}
     \item Price + Treasury Yields
@@ -529,24 +558,36 @@ price percentage change vs the previous day. The combinations of input features 
         \item 20 Year treasury yield percentage change vs previous day
         \item 30 Year treasury yield percentage change vs previous day
     \end{itemize}
-    \item Price + EFFR + Repurchase Agreements
+    \item Price + Effective Federal Funds Rate (EFFR)
     \begin{itemize}
         \item SPY price percentage change vs previous day
         \item Effective Federal Funds Rate percentage change vs previous day
-        \item Repurchase Agreement percentage change vs previous day
+    \end{itemize}
+    \item Price + Repurchase Agreements
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Repurchase Agreement Utilisation percentage change vs previous day
         \item Repurchase Agreement Rate percentage change vs previous day
-        \item Reverse Repurchase Agreement percentage change vs previous day
+    \end{itemize}
+    \item Price + Reverse Repurchase Agreements
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
+        \item Reverse Repurchase Agreement Utilisation percentage change vs previous day
         \item Reverse Repurchase Agreement Rate percentage change vs previous day
     \end{itemize}
-    \item Price + Gold + Currency
+    \item Price + Gold
     \begin{itemize}
         \item SPY price percentage change vs previous day
         \item Gold Price percentage change vs previous day
+    \end{itemize}
+    \item Price + Currency Exchange
+    \begin{itemize}
+        \item SPY price percentage change vs previous day
         \item USDGBP percentage change vs previous day
         \item USDEUR percentage change vs previous day
         \item USDJPY percentage change vs previous day
     \end{itemize}
-    \item Price + Put-to-Call Ratio
+    \item Price + Options (Put-to-Call Ratio)
     \begin{itemize}
         \item SPY price percentage change vs previous day
         \item Put-to-Call ratio percentage change vs previous day
