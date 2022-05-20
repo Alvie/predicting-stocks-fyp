@@ -10,6 +10,7 @@
 \usepackage{placeins}
 \usepackage{makecell}
 \usepackage{minted}
+\usepackage{pdfpages}
 \usepackage[export]{adjustbox}
 \usepackage[style=apa, backend=biber]{biblatex}
 \usepackage{subfig}
@@ -130,7 +131,18 @@ Thanks.
 
 %%%%%%%%%%%%%%% APPENDICES
 \appendix
-\chapter{First Appendix}
+\chapter{PID}
+The scope of the project has changed since the PID due to a number of reasons. Primarily the project
+type was adjusted from engineering to research and as a result the requirements of the project had changed.
+The project had become more focused on answering research questions rather than building an artefact.
+\includepdf[pages=-]{appendices/UP893057_PID.pdf}
+
+\chapter{Ethics Review}
+\includepdf[pages=-]{appendices/EthicsReview.pdf}
+
+\chapter{Source Code}
+The source code for this project is available in the main.ipynb and benchmark.ipynb files in this
+public GitHub repository: \url{https://github.com/Alvie/predicting-stocks-fyp}.
 
 
 
