@@ -175,7 +175,7 @@ The primary assumptions are surrounding the trading days; whilst this varies per
 that 1 week is equivalent to 5 trading days, 1 month is equivalent to 21 trading days, 1 quarter (3 months)
 is equivalent to 63 trading days, 1 half is equivalent to 126 trading days, and 1 year is equivalent to 252
 trading days. These assumptions are made based on the NYSE trading hours that shows a month may have
-between 19 to 23 trading days, each quarter may have 61 to 64 trading days, generally resulting in a total
+between 19 and 23 trading days, each quarter may have 61 to 64 trading days, generally resulting in a total
 of 252 trading days \parencite{nyse_2020}.
 
 \section{Data preprocessing}
@@ -256,7 +256,7 @@ and inputs that result in a negative trading day.
 \section{Model fitting}\label{sec:model_fitting}
 Each of the models in this project were fit using the Adam optimiser with a learning rate of 0.001 and a decay of
 1e-6. Adam is a popular and efficient algorithm for gradient descent in deep learning models.
-The "Sparse Categorical Crossentropy" loss function was utilised in the fitting of the model due to there being multiple
+The ``Sparse Categorical Crossentropy'' loss function was utilised in the fitting of the model due to there being multiple
 label classes. This calculates the loss as the negative sum of the differences between the true label and the log of the softmax
 probability.
 
@@ -264,8 +264,8 @@ probability.
 \subsection{Artificial intelligence model used}\label{ssec:iteration1_ai_model}
 In the first iteration, the LSTM model was utilised in order to create the foundations for the CNN-LSTM model. The LSTM
 consists of LSTM layers and Dense layers, with the final Dense layer having an output of 2, representing one output for
-a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
-probabilities of each output. The LSTM and Dense layers utilised the 'tanh' (hyperbolic tangent) and 'relu'
+a negative day (0) and another for a positive day (1), and utilised the `softmax' activation function to predict the
+probabilities of each output. The LSTM and Dense layers utilised the `tanh' (hyperbolic tangent) and `relu'
 (REctified Linear Unit) activation functions respectively.
 
 \subsection{Sequence length used}
@@ -303,7 +303,7 @@ The following models were created and compared with the following variables:
 \subsection{Diagram of model used}
 The diagram below (\autoref{fig:iteration1_model}) shows the best model identified in iteration 1 of this project.
 There are two LSTM layers with a layer size of 64; and two Dense layers, one with a layer size of 32 and one with
-a layer size of 2. For the purposes of this diagram, the 'None' value of each layer's shape can be ignored.
+a layer size of 2. For the purposes of this diagram, the `None' value of each layer's shape can be ignored.
 
 From the diagram, it is shown that the input shape the first LSTM layer takes: (None, 21, 31); this represents the
 fact there is a sequence length of 21 (trading days) and 31 input features.  This LSTM layer returns a sequence, so its
@@ -328,8 +328,8 @@ is an positive or negative trading day.
 \subsection{Artificial intelligence model used}\label{ssec:iteration2_ai_model}
 In the second iteration, the CNN model was utilised in order to create the foundations for the CNN-LSTM model. The CNN
 consists of Conv1D layers and Dense layers, with the final Dense layer having an output of 2, representing one output for
-a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
-probabilities of each output. The Conv1D and Dense layers utilised the 'relu' (REctified Linear Unit) activation
+a negative day (0) and another for a positive day (1), and utilised the `softmax' activation function to predict the
+probabilities of each output. The Conv1D and Dense layers utilised the `relu' (REctified Linear Unit) activation
 function.
 
 \subsection{Sequence length used}
@@ -367,7 +367,7 @@ The following models were created and compared with the following variables:
 \subsection{Diagram of model used}
 The diagram below (\autoref{fig:iteration2_model}) shows the best model identified in iteration 2 of this project.
 There is one Conv1D layer with a layer size of 32; and one Dense layer with a layer size of 2.
-For the purposes of this diagram, the 'None' value of each layer's shape can be ignored.
+For the purposes of this diagram, the `None' value of each layer's shape can be ignored.
 
 From the diagram, it is shown that the input shape the first Conv1D layer takes: (None, 1, 31); this represents the
 fact there are 31 input features.  This Conv1D layer has an output shape of (None, 1, 32); it is fairly abstract
@@ -389,7 +389,7 @@ is an positive or negative trading day.
 \subsection{Artificial intelligence model used}\label{ssec:iteration3_ai_model}
 In the third iteration, a hybrid approach of the previous models were used to create a CNN-LSTM model.
 This model consists of Conv1D layers, LSTM layers and Dense layers with the final Dense layer having an output of 2, representing one output for
-a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
+a negative day (0) and another for a positive day (1), and utilised the `softmax' activation function to predict the
 probabilities of each output.
 
 \subsection{Sequence length used}
@@ -433,10 +433,10 @@ The following models were created and compared with the following variables:
 The diagram below (\autoref{fig:iteration3_model}) shows the best model identified in iteration 3 of this project.
 There are two Conv1D layers with a layer size of 32, 1 LSTM layer with a layer size of 16 and two Dense layers, one
 with a layer size of 64 and the final Dense layer having an output of 2, representing one output for
-a negative day (0) and another for a positive day (1), and utilised the 'softmax' activation function to predict the
+a negative day (0) and another for a positive day (1), and utilised the `softmax' activation function to predict the
 probabilities of each output.
 
-For the purposes of this diagram, the 'None' value of each layer's shape can be ignored.
+For the purposes of this diagram, the `None' value of each layer's shape can be ignored.
 
 From the diagram, it is shown that the input shape the first Conv1D layer takes: (None, 21, 31); this represents the
 fact there is a sequence length of 21 and there are 31 input features.  This Conv1D layer has an output shape of (None, 21, 32); it is fairly abstract
@@ -444,7 +444,7 @@ but represents that a sequenced is passed to the next layer which has 32 neurons
 Conv1D layer with the same Input and Output shapes. Following the Convolutional layers, there is an LSTM layer
 which takes the input (None, 21, 32). It does not return a sequence and also reduces the layer size to 16 to produce an
 output shape of (None, 16). Dropouts and Batch Normalisation layers are added to aid with regularisation and optimisation of the model.
-Following the LSTM layers, there are Dense layets, the first of which takes the input of shape (None, 16) from the
+Following the LSTM layers, there are Dense layers, the first of which takes the input of shape (None, 16) from the
 LSTM layers and outputs a shape of (None, 64). Another Dropout layer is applied before transitioning to the final Dense layer that has an output shape of (None, 2)
 which represents the fact there are two potential outputs for the inputs: whether the following day
 is an positive or negative trading day.
