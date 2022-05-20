@@ -254,9 +254,10 @@ validation data; all validation data samples are from a date after the last date
 \subsection{Data balancing}
 In order to ensure the artificial intelligence models do not have any biases associated with them, each of the training
 and validation datasets will be shuffled to ensure the model is able to generalise rather than learn. Furthermore, once
-shuffled, the number of sequences that result in an positive trading day are counted as well as the number of sequences that result in
+shuffled, the number of sequences that result in a positive trading day are counted as well as the number of sequences that result in
 a negative day. The minimum of the two are chosen to ensure there is an even split of inputs that result in a positive trading day,
-and inputs that result in a negative trading day.
+and inputs that result in a negative trading day. Some data balancing code and concepts were adapted from
+an online tutorial series of creating neural networks \parencite{kinsley_2018}.
 
 \section{Model fitting}\label{sec:model_fitting}
 Each of the models in this project were fit using the Adam optimiser with a learning rate of 0.001 and a decay of
@@ -278,6 +279,17 @@ not carrying on for as many epochs as others.
 early_stopping = EarlyStopping(monitor='val_accuracy', 
                                 baseline=0.5,
                                 patience=12)
+\end{minted}
+
+\section{Model accuracy visualisation}
+In order to visualise the accuracies and losses, as well as time taken for each model, the Tensorboard
+call back was used. This provided an easy way to filter through data and understand which models performed
+well, which models were overfitting. Moreover, it aided in identifying consistently well suited parameters
+to create better models in the future. All of the accuracy and loss charts were created in Tensorboard.
+
+\begin{minted}{python}
+tensorboard = TensorBoard(
+                log_dir=f'lstmiteration1logs-{time_at_start}/{name}')
 \end{minted}
 
 \section{Iteration 1}
@@ -649,4 +661,5 @@ The following input features are used in this model:
 \end{itemize}
 
 The daily volume and closing price have been utilised in previous models for the artefact,
-but the open, high and low prices are unique to the benchmark application.
+but the open, high and low prices are unique to the benchmark application. This dataset was
+chosen as it has been found to be a popular dataset in previous studies \parencite{fitriyaningsih2019implementation,THAKKAR2020106684, hu_tang_zhang_wang_2018}.
